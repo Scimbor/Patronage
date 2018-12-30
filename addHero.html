@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Heros</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <nav class="main-nav main-nav-height">
+
+        <div class="main-nav__container">
+            <div class="main-nav__logo">
+                <a href="index.html" class="main-nav__logo-link"><img src="./images/logo.png" alt="logo"></a>
+            </div>
+
+            <div class="main-nav_toggle">
+                <label class="main-nav_toggle-label" for="toogle">
+                    <span class="main-nav_toggle-bar"></span>
+                </label>
+            </div>
+
+            <input type="checkbox" id="toogle" class="main-nav__toogle-input">
+
+            <ul class="main-nav__menu">
+                <li class="main-nav__menu-item">
+                    <a href="addHero.html" class="main-nav__menu-item-link">Dodaj herosa</a>
+                </li>
+                <li class="main-nav__menu-item">
+                    <a class="main-nav__menu-item-link">Edytuj herosa</a>
+                </li>
+                <li class="main-nav__menu-item">
+                    <a class="main-nav__menu-item-link">Usuń herosa</a>
+                </li>
+                <li class="main-nav__menu-item">
+                    <a class="main-nav__menu-item-link">Wyczyść baze</a>
+                </li>
+                <li class="main-nav__menu-item">
+                    <a class="main-nav__menu-item-link">Wczytaj herosów</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <form class="form" action="">
+        <h2>Dodaj herosa</h2>
+        <div class="form__control">
+            <input type="text" name="name" id="name_hero" placeholder="Nazwa Bohatera" class="form__control-input">
+        </div>
+
+        <div class="form__control">
+            <input type="text" name="pathImg_hero" id="pathImg_hero" placeholder="Adres/nazwa zdjecia" class="form__control-input">
+        </div>
+
+        <div class="form__control">
+            <input type="text" name="price_hero" id="price_hero" placeholder="Cena wynajmu/h" class="form__control-input">
+        </div>
+
+        <div class="form__control">
+            <textarea type="text" name="price_hero" id="price_hero" placeholder="Opisa bohatera" class="form__control-input form__control-textarea"></textarea>
+        </div>
+
+        <button type="submit" class="form__button">Submit</button>
+    </form>
+
+    <footer>
+        <p>Zadanie stazowe</p>
+    </footer>
+</body>
+
+</html>
