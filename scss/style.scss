@@ -460,6 +460,9 @@ footer {
             display: flex;
             flex-direction: column;
             padding-bottom: 30px;
+            .heroesList__hero-modal{
+                overflow-y: scroll;
+            }
             .heroesList__hero-modal-content {
                 flex-direction: column;
                 width: auto;
@@ -468,6 +471,7 @@ footer {
                     .heroesList__hero-modal-line,
                     .heroesList__hero-modal-button {
                         width: 100%;
+                        justify-content: center;
                     }
                     .heroesList__hero-modal-price {
                         width: inherit;

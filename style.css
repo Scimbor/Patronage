@@ -353,6 +353,8 @@ footer {
     display: flex;
     flex-direction: column;
     padding-bottom: 30px; }
+    .heroesList .heroesList__hero .heroesList__hero-modal {
+      overflow-y: scroll; }
     .heroesList .heroesList__hero .heroesList__hero-modal-content {
       flex-direction: column;
       width: auto; }
@@ -360,7 +362,8 @@ footer {
         padding-left: 0; }
         .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer .heroesList__hero-modal-line,
         .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer .heroesList__hero-modal-button {
-          width: 100%; }
+          width: 100%;
+          justify-content: center; }
         .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer .heroesList__hero-modal-price {
           width: inherit;
           text-align: center; }
