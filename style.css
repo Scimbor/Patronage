@@ -353,11 +353,9 @@ footer {
     display: flex;
     flex-direction: column;
     padding-bottom: 30px; }
-    .heroesList .heroesList__hero .heroesList__hero-modal {
-      overflow-y: scroll; }
     .heroesList .heroesList__hero .heroesList__hero-modal-content {
       flex-direction: column;
-      width: auto; }
+      overflow: auto; }
       .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer {
         padding-left: 0; }
         .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer .heroesList__hero-modal-line,

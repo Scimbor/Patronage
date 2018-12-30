@@ -277,7 +277,7 @@ body {
                     font-size: 1vw;
                     span {
                         display: flex;
-                        align-items:center;
+                        align-items: center;
                         &:before {
                             content: "";
                             display: flex;
@@ -325,7 +325,6 @@ footer {
     }
 }
 
-
 @media only screen and (max-width: 1024px) and (min-width: 761px) {
     .main-nav {
         .main-nav__menu {
@@ -358,10 +357,9 @@ footer {
                 display: flex;
                 padding: 15px;
                 width: calc(100% * (1/2) - 40px - 1px);
-
-                .heroInfo{
-                    .heroInBasket__delete{
-                        font-size:1.3vw;
+                .heroInfo {
+                    .heroInBasket__delete {
+                        font-size: 1.3vw;
                     }
                 }
             }
@@ -460,12 +458,12 @@ footer {
             display: flex;
             flex-direction: column;
             padding-bottom: 30px;
-            .heroesList__hero-modal{
-                overflow-y: scroll;
+            .heroesList__hero-modal {
+
             }
             .heroesList__hero-modal-content {
                 flex-direction: column;
-                width: auto;
+                overflow: auto;
                 .heroesList__hero-modal-contentContainer {
                     padding-left: 0;
                     .heroesList__hero-modal-line,
@@ -512,12 +510,10 @@ footer {
     .shoppingBasket {
         .heroesInBasket {
             flex-direction: column;
-
-            .heroInBasket{
+            .heroInBasket {
                 width: calc(100% * (1/1) - 32px - 1px);
-
-                .heroInfo{
-                    .heroInBasket__delete{
+                .heroInfo {
+                    .heroInBasket__delete {
                         font-size: 15px;
                     }
                 }
