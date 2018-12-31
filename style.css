@@ -148,7 +148,8 @@ body {
       opacity: 1;
       visibility: visible;
       transform: scale(1);
-      transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s; }
+      transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+      overflow: scroll; }
 
 .form {
   width: 50%;
@@ -251,6 +252,18 @@ footer {
   padding: 10px 0;
   color: white; }
 
+.danger {
+  color: red;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  height: 0;
+  opacity: 0;
+  transition: 0.2s all; }
+
+.dangerFill {
+  padding: 10px 0; }
+
 @media only screen and (max-width: 1300px) {
   .main-nav .main-nav__menu {
     justify-content: space-evenly; }
@@ -328,16 +341,15 @@ footer {
       .main-nav .main-nav_toggle .main-nav_toggle-label.transformMenu .main-nav_toggle-bar::before {
         background: black;
         margin-top: 0; }
-    .main-nav #toogle:checked + .main-nav__menu {
+    .main-nav #toggle:checked + .main-nav__menu {
       transition: 0.2s;
       left: 0; }
   .main-nav__menu {
     position: absolute;
+    top: 0;
+    left: -100%;
     flex-direction: column;
     justify-content: flex-start;
-    left: -100%;
-    top: 0;
-    height: 0;
     transition: 0.2s;
     width: 100vw;
     height: 100vh;
@@ -386,6 +398,8 @@ footer {
     padding: 40px 15px; }
     .form .form__control .form__control-input {
       width: 100%; }
+  .shoppingBasket .shoppingBasket__info {
+    flex-direction: column; }
   .shoppingBasket .heroesInBasket {
     flex-direction: column; }
     .shoppingBasket .heroesInBasket .heroInBasket {

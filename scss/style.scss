@@ -184,6 +184,7 @@ body {
             visibility: visible;
             transform: scale(1.0);
             transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+            overflow: scroll;
         }
     }
 }
@@ -311,6 +312,20 @@ footer {
     color: white;
 }
 
+.danger{
+    color:red;
+    font-size:10px;
+    font-weight: bold;
+    text-align: center;
+    height: 0;
+    opacity: 0;
+    transition: 0.2s all;
+}
+
+.dangerFill{
+    padding: 10px 0;
+}
+
 @media only screen and (max-width:1300px) {
     .main-nav {
         .main-nav__menu {
@@ -426,18 +441,17 @@ footer {
                 }
             }
         }
-        #toogle:checked+.main-nav__menu {
+        #toggle:checked +.main-nav__menu {
             transition: 0.2s;
             left: 0;
         }
     }
     .main-nav__menu {
         position: absolute;
+        top:0;
+        left: -100%;
         flex-direction: column;
         justify-content: flex-start;
-        left: -100%;
-        top: 0;
-        height: 0;
         transition: 0.2s;
         width: 100vw;
         height: 100vh;
@@ -458,9 +472,6 @@ footer {
             display: flex;
             flex-direction: column;
             padding-bottom: 30px;
-            .heroesList__hero-modal {
-
-            }
             .heroesList__hero-modal-content {
                 flex-direction: column;
                 overflow: auto;
@@ -508,6 +519,9 @@ footer {
         }
     }
     .shoppingBasket {
+        .shoppingBasket__info{
+            flex-direction: column;
+        }
         .heroesInBasket {
             flex-direction: column;
             .heroInBasket {

@@ -48,11 +48,12 @@
             </ul>
         </div>
     </nav>
-
-    <form class="form" action="">
+    <p class="danger dangerFill" id="dangerFill">Wymagane są wsystkie pola.</p>
+    <form class="form">
         <h2>Dodaj herosa</h2>
         <div class="form__control">
             <input type="text" name="name" id="name_hero" placeholder="Nazwa Bohatera" class="form__control-input">
+            <p class="danger">Wymagane są minimum 2 litery.</p>
         </div>
 
         <div class="form__control">
@@ -64,10 +65,10 @@
         </div>
 
         <div class="form__control">
-            <textarea type="text" name="price_hero" id="price_hero" placeholder="Opisa bohatera" class="form__control-input form__control-textarea"></textarea>
+            <textarea type="text" name="price_hero" id="description_hero" placeholder="Opisa bohatera" class="form__control-input form__control-textarea"></textarea>
         </div>
 
-        <button type="submit" class="form__button">Submit</button>
+        <button type="submit" class="form__button" id="addHero">Submit</button>
     </form>
 
     <footer>

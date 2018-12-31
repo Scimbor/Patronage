@@ -45,6 +45,15 @@ var heroes = [
 
 var shoppingBasket = [];
 
+class Store {
+    static addHeroToList(name, descripion, image, price, isAvailable = true){
+        if(name === '' || descripion === '' || image === '' || price == ''){
+            document.getElementById('dangerFill').style.opacity = '1';
+        }else{
+
+        }
+    }
+}
 
 class UI {
     static displayHeroes(target) {
@@ -68,7 +77,7 @@ class UI {
     static deleteModal() {
         document.querySelector('.heroesList__hero-modal').remove();
     }
-
+ 
     static createModal(index) {
 
         if (document.querySelector('.heroesList__hero-modal')) {
@@ -104,7 +113,7 @@ class UI {
             UI.addHeroToBasket(index);
         });
     }
-
+ 
     static addHeroToBasket(index){
         const div  = document.createElement('div');
         div.className = 'heroInBasket';
@@ -121,14 +130,14 @@ class UI {
         div.innerHTML = output;
         container.appendChild(div);
     }
+
 }
+
 
 document.addEventListener('DOMContentLoaded', (e) => {
 
     let toggle = document.querySelector('.main-nav_toggle-label');
     let heroesContainer = document.querySelector('.heroesList');
-    let shoppingBasketState = document.querySelector('.shoppingBasket__state');
-    let heroesCost = document.querySelector('.heroesCost');
 
     if (heroesContainer != null) {
         heroesContainer.addEventListener('click', (e) => {
@@ -146,5 +155,18 @@ document.addEventListener('DOMContentLoaded', (e) => {
         if (e.target.className === 'close-button') {
             UI.deleteModal();
         }
-    })
+    });
+
+    document.addEventListener('click', (e) => {
+        if(e.target && e.target.id === 'addHero'){
+            let name = document.getElementById('name_hero').value;
+            let description = document.getElementById('description_hero').value;
+            let image = document.getElementById('pathImg_hero').value;
+            let price = document.getElementById('price_hero').value;
+            //console.log(`Name: ${name}\nDescription: ${description}\nPath to Image: ${image}\nPrice: ${price}`);
+            Store.addHeroToList(name, description, image, price);
+        }
+
+        e.preventDefault();
+     });
 });
