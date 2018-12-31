@@ -441,7 +441,7 @@ footer {
                 }
             }
         }
-        #toggle:checked +.main-nav__menu {
+        #toggle:checked + .main-nav__menu {
             transition: 0.2s;
             left: 0;
         }
@@ -536,4 +536,9 @@ footer {
             }
         }
     }
+}
+
+.showMenu{
+    transition: 0.2s;
+    left: 0 !important;
 }

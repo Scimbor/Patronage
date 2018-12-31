@@ -408,3 +408,7 @@ footer {
         flex-direction: column; }
         .shoppingBasket .heroesInBasket .heroInBasket .heroInfo .heroInBasket__delete {
           font-size: 12px; } }
+
+.showMenu {
+  transition: 0.2s;
+  left: 0 !important; }

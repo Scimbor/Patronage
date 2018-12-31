@@ -1,3 +1,5 @@
+import { strict } from "assert";
+
 var heroes = [
     {
         name: 'Superman',
@@ -46,10 +48,10 @@ var heroes = [
 var shoppingBasket = [];
 
 class Store {
-    static addHeroToList(name, descripion, image, price, isAvailable = true){
-        if(name === '' || descripion === '' || image === '' || price == ''){
+    static addHeroToList(name, descripion, image, price, isAvailable = true) {
+        if (name === '' || descripion === '' || image === '' || price == '') {
             document.getElementById('dangerFill').style.opacity = '1';
-        }else{
+        } else {
 
         }
     }
@@ -57,27 +59,29 @@ class Store {
 
 class UI {
     static displayHeroes(target) {
-        let count = 0;
-
         if (target == null) {
             return 0;
         }
 
-        heroes.forEach(hero => {
-            target.innerHTML += `<div class="heroesList__hero" data-hero="${count}">
+        heroes.forEach((hero, index) => {
+            let item = document.createElement('div');
+
+            item.className = 'heroesList__hero';
+            item.setAttribute('data-hero', index);
+
+            item.innerHTML = `                
                 <img src="${hero.image}" src="${hero.name}" class="heroesList__hero-img"/>
                 <h2>${hero.name}</h2>
-                <p>Cena wynajmu: ${hero.price} zl/h</p>
-            </div>`;
+                <p>Cena wynajmu: ${hero.price} zl/h</p>`;
 
-            count++;
+            target.appendChild(item);
         });
     }
 
     static deleteModal() {
         document.querySelector('.heroesList__hero-modal').remove();
     }
- 
+
     static createModal(index) {
 
         if (document.querySelector('.heroesList__hero-modal')) {
@@ -109,13 +113,12 @@ class UI {
         let heroButtton = document.querySelector('.heroesList__hero-modal-button');
 
         heroButtton.addEventListener('click', (e) => {
-            console.log(heroes[index]);
             UI.addHeroToBasket(index);
         });
     }
- 
-    static addHeroToBasket(index){
-        const div  = document.createElement('div');
+
+    static addHeroToBasket(index) {
+        const div = document.createElement('div');
         div.className = 'heroInBasket';
 
         var output = `<img src="${heroes[index].image}" alt="${heroes[index].name}">
@@ -136,18 +139,18 @@ class UI {
 
 document.addEventListener('DOMContentLoaded', (e) => {
 
-    let toggle = document.querySelector('.main-nav_toggle-label');
     let heroesContainer = document.querySelector('.heroesList');
-
+    let toggle = document.querySelector('.main-nav_toggle-label');
+    
+    UI.displayHeroes(heroesContainer);
+    
     if (heroesContainer != null) {
         heroesContainer.addEventListener('click', (e) => {
             UI.createModal(e.target.parentNode.getAttribute("data-hero"));
         });
     }
 
-    UI.displayHeroes(heroesContainer);
-
-    toggle.addEventListener('click', () => {
+    toggle.addEventListener('click', (e) => {
         toggle.classList.toggle('transformMenu');
     });
 
@@ -158,15 +161,13 @@ document.addEventListener('DOMContentLoaded', (e) => {
     });
 
     document.addEventListener('click', (e) => {
-        if(e.target && e.target.id === 'addHero'){
+        if (e.target && e.target.id === 'addHero') {
             let name = document.getElementById('name_hero').value;
             let description = document.getElementById('description_hero').value;
             let image = document.getElementById('pathImg_hero').value;
             let price = document.getElementById('price_hero').value;
-            //console.log(`Name: ${name}\nDescription: ${description}\nPath to Image: ${image}\nPrice: ${price}`);
             Store.addHeroToList(name, description, image, price);
-        }
-
-        e.preventDefault();
-     });
+            e.preventDefault();
+        }   
+    }); 
 });
