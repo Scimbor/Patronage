@@ -1,59 +1,39 @@
-import { strict } from "assert";
-
-var heroes = [
-    {
-        name: 'Superman',
-        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        image: './images/superman.jpg',
-        price: 3500,
-        isAvailable: true
-    },
-    {
-        name: 'Hulk',
-        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        image: './images/hulk.jpg',
-        price: 25000,
-        isAvailable: true
-    },
-    {
-        name: 'Thor',
-        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        image: './images/thor.jpg',
-        price: 550000,
-        isAvailable: true
-    },
-    {
-        name: 'Ironman',
-        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        image: './images/ironman.jpg',
-        price: 750000,
-        isAvailable: true
-    },
-    {
-        name: 'Potter',
-        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        image: './images/potter.jpg',
-        price: 125000,
-        isAvailable: true
-    },
-    {
-        name: 'Batman',
-        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        image: './images/batman.jpg',
-        price: 200000,
-        isAvailable: true
-    }
-]
-
 var shoppingBasket = [];
+var heroes;
 
 class Store {
+    static getBooks() {
+        if (localStorage.getItem('heroes') === null) {
+            heroes = [];
+        } else {
+            heroes = JSON.parse(localStorage.getItem('heroes'));
+        }
+
+        return heroes;
+    }
+
     static addHeroToList(name, descripion, image, price, isAvailable = true) {
         if (name === '' || descripion === '' || image === '' || price == '') {
             document.getElementById('dangerFill').style.opacity = '1';
         } else {
+            var hero = {
+                name,
+                descripion,
+                image,
+                price,
+                isAvailable
+            }
 
+            heroes.unshift(hero);
+            localStorage.setItem('heroes', JSON.stringify(heroes));
+            console.log(heroes);
         }
+    }
+
+    static addBook(book) {
+        const books = Store.getBooks();
+        books.push(book);
+        localStorage.setItem('books', JSON.stringify(books));
     }
 }
 
@@ -138,7 +118,7 @@ class UI {
 
 
 document.addEventListener('DOMContentLoaded', (e) => {
-
+    heroes = Store.getBooks();
     let heroesContainer = document.querySelector('.heroesList');
     let toggle = document.querySelector('.main-nav_toggle-label');
     

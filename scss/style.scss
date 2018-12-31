@@ -92,6 +92,7 @@ body {
         cursor: pointer;
         .heroesList__hero-img {
             width: 100%;
+            height: 92%;
         }
         .heroesList__hero-modal {
             position: fixed;
@@ -119,7 +120,7 @@ body {
             background-color: white;
             padding: 1rem 1.5rem;
             border-radius: 0.2rem;
-            width: 70%;
+            width: auto;
             .heroesList__hero-modal-contentContainer {
                 display: flex;
                 flex-direction: column;
@@ -361,6 +362,10 @@ footer {
             width: calc(100% * (1/2) - 40px - 1px);
             .heroesList__hero-modal-content {
                 width: 600px;
+
+                img{
+                    width: 50%;
+                }
             }
         }
     }
@@ -475,6 +480,7 @@ footer {
             .heroesList__hero-modal-content {
                 flex-direction: column;
                 overflow: auto;
+                width: 70%;
                 .heroesList__hero-modal-contentContainer {
                     padding-left: 0;
                     .heroesList__hero-modal-line,

@@ -71,7 +71,8 @@ body {
     margin-bottom: 50px;
     cursor: pointer; }
     .heroesList .heroesList__hero .heroesList__hero-img {
-      width: 100%; }
+      width: 100%;
+      height: 92%; }
     .heroesList .heroesList__hero .heroesList__hero-modal {
       position: fixed;
       left: 0;
@@ -96,7 +97,7 @@ body {
       background-color: white;
       padding: 1rem 1.5rem;
       border-radius: 0.2rem;
-      width: 70%; }
+      width: auto; }
       .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer {
         display: flex;
         flex-direction: column;
@@ -285,6 +286,8 @@ footer {
     width: calc(100% * (1/2) - 40px - 1px); }
     .heroesList .heroesList__hero .heroesList__hero-modal-content {
       width: 600px; }
+      .heroesList .heroesList__hero .heroesList__hero-modal-content img {
+        width: 50%; }
   .shoppingBasket .heroesInBasket {
     display: flex;
     flex-wrap: wrap; }
@@ -367,7 +370,8 @@ footer {
     padding-bottom: 30px; }
     .heroesList .heroesList__hero .heroesList__hero-modal-content {
       flex-direction: column;
-      overflow: auto; }
+      overflow: auto;
+      width: 70%; }
       .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer {
         padding-left: 0; }
         .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer .heroesList__hero-modal-line,
