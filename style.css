@@ -83,8 +83,8 @@ body {
       transition: 0.2s all;
       z-index: 2; }
       .heroesList .heroesList__hero .heroesList__hero-modal img {
-        max-height: 316px;
-        width: 50%; }
+        width: 100%;
+        height: calc(100% * 1.75); }
     .heroesList .heroesList__hero .heroesList__hero-modal-content {
       position: absolute;
       top: 50%;
@@ -94,7 +94,7 @@ body {
       background-color: white;
       padding: 1rem 1.5rem;
       border-radius: 0.2rem;
-      width: auto; }
+      width: 70%; }
       .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer {
         display: flex;
         flex-direction: column;
@@ -247,8 +247,10 @@ body {
         height: 186px;
         padding-right: 20px; }
   .shoppingBasket .shoppingBasket__state {
+    color: #bbbbbb;
+    font-size: 20px;
     text-align: center;
-    padding-bottom: 15px; }
+    padding-bottom: 20px; }
 
 footer {
   background-color: #261d52;
@@ -256,6 +258,11 @@ footer {
   text-align: center;
   padding: 10px 0;
   color: white; }
+
+footer.addHero__footer {
+  position: fixed;
+  bottom: 0;
+  z-index: -3; }
 
 .danger {
   color: red;
@@ -298,16 +305,29 @@ footer {
     .shoppingBasket .heroesInBasket .heroInBasket {
       display: flex;
       padding: 15px;
-      width: calc(100% * (1/2) - 40px - 1px); }
-      .shoppingBasket .heroesInBasket .heroInBasket .heroInfo .heroInBasket__delete {
-        font-size: 1.3vw; } }
+      width: calc(100% * (1/2) - 40px - 1px);
+      flex-direction: column; }
+      .shoppingBasket .heroesInBasket .heroInBasket img {
+        height: 281px;
+        padding-right: 0; }
+      .shoppingBasket .heroesInBasket .heroInBasket .heroInfo {
+        flex-direction: column; }
+        .shoppingBasket .heroesInBasket .heroInBasket .heroInfo .heroInBasket__delete {
+          margin-top: 10px;
+          font-size: 12px; }
+          .shoppingBasket .heroesInBasket .heroInBasket .heroInfo .heroInBasket__delete span {
+            display: none; }
+        .shoppingBasket .heroesInBasket .heroInBasket .heroInfo h4 {
+          padding: 15px 0;
+          text-align: center;
+          font-size: 25px; }
+        .shoppingBasket .heroesInBasket .heroInBasket .heroInfo .heroInBasket__delete {
+          font-size: 1.3vw; } }
 
 @media only screen and (max-width: 760px) {
   .main-nav {
     display: flex;
     height: auto; }
-    .main-nav .main-nav_backgroundDiv-backgroundXS {
-      width: 200%; }
     .main-nav .main-nav__container {
       width: 100%;
       justify-content: space-between; }
@@ -398,7 +418,6 @@ footer {
             text-align: center;
             width: 100%; }
         .heroesList .heroesList__hero .heroesList__hero-modal-content img {
-          width: auto;
           padding-bottom: 10px; }
       .heroesList .heroesList__hero .modal__close-button {
         position: relative;

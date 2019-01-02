@@ -1,6 +1,6 @@
 let shoppingBasket = [];
 let heroes = [];
-var price = 0.00;
+let price = (0).toFixed(2);
 
 class Store {
     static getHeroes() {
@@ -120,14 +120,15 @@ class UI {
 
         if (shoppingBasket.length == 0 && document.querySelector('.shoppingBasket__state') != null) {
             document.querySelector('.shoppingBasket__state').textContent = 'Twój koszyk jest pusty.';
-            document.getElementById('heroesCost').textContent = price.toString();
-        } else if(shoppingBasket.length > 0 && document.querySelector('.shoppingBasket__state') != null){
+            document.getElementById('heroesCost').textContent = `${parseFloat(price).toFixed(2)} zł` ;
+            document.getElementById('heroesCost').style.color = 'red';
+        } else if (shoppingBasket.length > 0 && document.querySelector('.shoppingBasket__state') != null) {
             price = 0;
             document.querySelector('.shoppingBasket__state').textContent = '';
             shoppingBasket.forEach(hero => {
                 price = price + parseInt(hero.price);
             });
-            document.getElementById('heroesCost').textContent = price;
+            document.getElementById('heroesCost').textContent = `${parseFloat(price).toFixed(2)} zł`;
         }
     }
 
@@ -172,7 +173,8 @@ class UI {
             if (!found) {
                 Store.addHeroToBasketList(index);
                 UI.displayHeroesBasket();
-            }else{
+                document.getElementById('heroesCost').style.color = 'black';
+            } else {
                 UI.heroMessage('Bohater znajduje sie w koszuku');
             }
         });
@@ -183,7 +185,7 @@ class UI {
         const container = document.querySelector('.heroesList__hero-modal-contentContainer');
 
         div.className = `heroesList__hero-modal-borrowed`;
-        div.appendChild(document.createTextNode(msg));  
+        div.appendChild(document.createTextNode(msg));
         container.appendChild(div);
 
         setTimeout(function () {

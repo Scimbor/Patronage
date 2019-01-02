@@ -105,8 +105,8 @@ body {
             transition: 0.2s all;
             z-index: 2;
             img {
-                max-height: 316px;
-                width: 50%;
+                width: 100%;
+                height: calc(100% * 1.75);
             }
         }
         .heroesList__hero-modal-content {
@@ -118,7 +118,7 @@ body {
             background-color: white;
             padding: 1rem 1.5rem;
             border-radius: 0.2rem;
-            width: auto;
+            width: 70%;
             .heroesList__hero-modal-contentContainer {
                 display: flex;
                 flex-direction: column;
@@ -306,8 +306,10 @@ body {
         }
     }
     .shoppingBasket__state {
+        color: #bbbbbb;
+        font-size: 20px;
         text-align: center;
-        padding-bottom: 15px;
+        padding-bottom: 20px;
     }
 }
 
@@ -317,6 +319,12 @@ footer {
     text-align: center;
     padding: 10px 0;
     color: white;
+}
+
+footer.addHero__footer{
+    position: fixed;
+    bottom: 0;
+    z-index: -3;
 }
 
 .danger{
@@ -383,7 +391,29 @@ footer {
                 display: flex;
                 padding: 15px;
                 width: calc(100% * (1/2) - 40px - 1px);
+                flex-direction: column;
+                img{
+                    height: 281px;
+                    padding-right: 0;
+                }
                 .heroInfo {
+                    flex-direction: column;
+
+                    .heroInBasket__delete {
+                        margin-top: 10px;
+                        font-size: 12px;
+
+                        span{
+                            display: none;
+                        }
+                    }
+
+                    h4{
+                        padding: 15px 0;
+                        text-align: center;
+                        font-size: 25px;
+                    }
+                    
                     .heroInBasket__delete {
                         font-size: 1.3vw;
                     }
@@ -397,9 +427,6 @@ footer {
     .main-nav {
         display: flex;
         height: auto;
-        .main-nav_backgroundDiv-backgroundXS{
-            width: 200%;
-        }
         .main-nav__container {
             width: 100%;
             justify-content: space-between;
@@ -514,7 +541,6 @@ footer {
                     }
                 }
                 img {
-                    width: auto;
                     padding-bottom: 10px;
                 }
             }
