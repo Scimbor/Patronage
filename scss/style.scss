@@ -17,10 +17,7 @@ body {
 
 .main-nav-height {
     height: unset !important;
-    background-image: url('https://scimbor.github.io/images/newHeader.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+    background-image: none;
 }
 
 .main-nav {
@@ -400,6 +397,9 @@ footer {
     .main-nav {
         display: flex;
         height: auto;
+        .main-nav_backgroundDiv-backgroundXS{
+            width: 200%;
+        }
         .main-nav__container {
             width: 100%;
             justify-content: space-between;
