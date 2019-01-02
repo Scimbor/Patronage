@@ -82,11 +82,11 @@ body {
     width: 90%;
     margin: 0 auto;
     padding: 50px 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 4em;
     .heroesList__hero {
-        width: calc(100% * (1/3) - 40px - 1px);
+        
         text-align: center;
         margin-bottom: 50px;
         cursor: pointer;
@@ -109,6 +109,7 @@ body {
             z-index: 2;
             img {
                 max-height: 316px;
+                width: 50%;
             }
         }
         .heroesList__hero-modal-content {
@@ -160,6 +161,13 @@ body {
                     &:before {
                         margin-bottom: 10px;
                     }
+                }
+                .heroesList__hero-modal-borrowed{
+                    text-align: left;
+                    padding: 15px 0;
+                    width: fit-content;
+                    font-size: 10px;
+                    color: red;
                 }
                 h1 {
                     text-transform: uppercase;
@@ -358,8 +366,8 @@ footer {
         }
     }
     .heroesList {
+        grid-template-columns: 1fr 1fr;
         .heroesList__hero {
-            width: calc(100% * (1/2) - 40px - 1px);
             .heroesList__hero-modal-content {
                 width: 600px;
 
@@ -471,6 +479,7 @@ footer {
         }
     }
     .heroesList {
+        grid-template-columns: 1fr;
         .heroesList__hero {
             width: 100%;
             margin: 0 auto;

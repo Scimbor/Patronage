@@ -1,24 +1,39 @@
-var shoppingBasket = [];
-var heroes;
+let shoppingBasket = [];
+let heroes = [];
+var price = 0.00;
 
 class Store {
-    static getBooks() {
+    static getHeroes() {
+        let heroesArray;
         if (localStorage.getItem('heroes') === null) {
-            heroes = [];
+            heroesArray = [];
+            heroesArray = heroesArray_1;
+            localStorage.setItem('heroes', JSON.stringify(heroesArray));
         } else {
-            heroes = JSON.parse(localStorage.getItem('heroes'));
+            heroesArray = JSON.parse(localStorage.getItem('heroes'));
         }
 
-        return heroes;
+        return heroesArray;
     }
 
-    static addHeroToList(name, descripion, image, price, isAvailable = true) {
-        if (name === '' || descripion === '' || image === '' || price == '') {
+    static getBasket() {
+        let basketArray;
+        if (localStorage.getItem('heroesBasket') === null) {
+            basketArray = [];
+        } else {
+            basketArray = JSON.parse(localStorage.getItem('heroesBasket'));
+        }
+
+        return basketArray;
+    }
+
+    static addHeroToList(name, description, image, price, isAvailable = true) {
+        if (name === '' || description === '' || image === '' || price == '') {
             document.getElementById('dangerFill').style.opacity = '1';
         } else {
             var hero = {
                 name,
-                descripion,
+                description,
                 image,
                 price,
                 isAvailable
@@ -26,14 +41,33 @@ class Store {
 
             heroes.unshift(hero);
             localStorage.setItem('heroes', JSON.stringify(heroes));
-            console.log(heroes);
         }
     }
 
-    static addBook(book) {
-        const books = Store.getBooks();
-        books.push(book);
-        localStorage.setItem('books', JSON.stringify(books));
+    static addHeroToBasketList(index) {
+        shoppingBasket.push(heroes[index]);
+        price = price + parseFloat(heroes[index].price);
+        console.log(price);
+        document.querySelector('.shoppingBasket__state').textContent = '';
+        document.getElementById('heroesCost').textContent = price;
+        localStorage.setItem('heroesBasket', JSON.stringify(shoppingBasket));
+    }
+
+    static removeHeroFromBasket(nameHero, indexHero) {
+        console.log(`Data-hero: ${nameHero}`);
+        shoppingBasket.forEach(hero => {
+            if (hero.name == nameHero) {
+                shoppingBasket.splice(indexHero, 1);
+                localStorage.setItem('heroesBasket', JSON.stringify(shoppingBasket));
+                price = price - hero.price;
+                document.getElementById('heroesCost').textContent = price;
+                if (price == 0 || shoppingBasket.length == 0) {
+                    document.querySelector('.shoppingBasket__state').textContent = 'Twój koszyk jest pusty.';
+                }
+            }
+        });
+
+        console.log(shoppingBasket);
     }
 }
 
@@ -42,12 +76,12 @@ class UI {
         if (target == null) {
             return 0;
         }
-
         heroes.forEach((hero, index) => {
             let item = document.createElement('div');
 
             item.className = 'heroesList__hero';
-            item.setAttribute('data-hero', index);
+            item.setAttribute('data-index', index);
+            item.setAttribute('data-name', hero.name);
 
             item.innerHTML = `                
                 <img src="${hero.image}" src="${hero.name}" class="heroesList__hero-img"/>
@@ -58,11 +92,42 @@ class UI {
         });
     }
 
+    static displayHeroesBasket() {
+        shoppingBasket.forEach((hero, index) => {
+            const div = document.createElement('div');
+            div.className = 'heroInBasket';
+
+            var output = `
+                <img src="${hero.image}" alt="${hero.name}">
+                <div class="heroInfo">
+                    <h4>${hero.name}</h4>
+                    <p class="heroInfo__text">${hero.description.slice(1, 100)}...</p>
+                    <button class="heroInBasket__delete" data-name="${hero.name}" data-index="${index}">Usuń z koszyka<span>&times;</span></button>
+                </div>`;
+
+            div.innerHTML = output;
+            const container = document.querySelector('.heroesInBasket');
+            div.innerHTML = output;
+            container.appendChild(div);
+        });
+
+        if (shoppingBasket.length == 0) {
+            document.querySelector('.shoppingBasket__state').textContent = 'Twój koszyk jest pusty.';
+            document.getElementById('heroesCost').textContent = price.toString();
+        } else {
+            document.querySelector('.shoppingBasket__state').textContent = '';
+            shoppingBasket.forEach(hero => {
+                price = price + parseInt(hero.price);
+            });
+            document.getElementById('heroesCost').textContent = price;
+        }
+    }
+
     static deleteModal() {
         document.querySelector('.heroesList__hero-modal').remove();
     }
 
-    static createModal(index) {
+    static createModal(name, index) {
 
         if (document.querySelector('.heroesList__hero-modal')) {
             return 0;
@@ -82,7 +147,7 @@ class UI {
                     <span class="heroesList__hero-modal-line"></span>
                     <p>${heroes[index].description}</p>
                     <p class="heroesList__hero-modal-price">Wynajem: ${heroes[index].price} zl/h</p>
-                    <button class="heroesList__hero-modal-button" data-hero="${index}">Dodaj do koszyka</button>
+                    <button class="heroesList__hero-modal-button"  data-name="${heroes[index].name}" data-index="${index}">Dodaj do koszyka</button>
                 </div>
             </div>`;
 
@@ -93,20 +158,23 @@ class UI {
         let heroButtton = document.querySelector('.heroesList__hero-modal-button');
 
         heroButtton.addEventListener('click', (e) => {
-            UI.addHeroToBasket(index);
+            Store.addHeroToBasketList(index);
+            UI.addHeroToBasket(name, index);
+            console.log('Bohater dodany do koszyka');
         });
     }
 
-    static addHeroToBasket(index) {
+    static addHeroToBasket(name, index) {
         const div = document.createElement('div');
         div.className = 'heroInBasket';
 
-        var output = `<img src="${heroes[index].image}" alt="${heroes[index].name}">
-        <div class="heroInfo">
-            <h4>${heroes[index].name}</h4>
-            <p class="heroInfo__text">${(heroes[index].description).split(',')[0]}</p>
-            <button class="heroInBasket__delete" data-hero="${index}">Usuń z koszyka<span>&times;</span></button>
-        </div>`;
+        var output = `
+            <img src="${heroes[index].image}" alt="${heroes[index].name}">
+            <div class="heroInfo">
+                <h4>${heroes[index].name}</h4>
+                <p class="heroInfo__text">${heroes[index].description.slice(1, 100)}...</p>
+                <button class="heroInBasket__delete" data-name="${name}" data-index="${index}">Usuń z koszyka<span>&times;</span></button>
+            </div>`;
 
         div.innerHTML = output;
         const container = document.querySelector('.heroesInBasket');
@@ -114,19 +182,39 @@ class UI {
         container.appendChild(div);
     }
 
+    static heroMessage(msg) {
+        const div = document.createElement('div');
+        div.className = `heroesList__hero-modal-borrowed`;
+        div.appendChild(document.createTextNode(msg));
+        const container = document.querySelector('.heroesList__hero-modal-contentContainer');
+        container.appendChild(div);
+
+        setTimeout(function () {
+            if (document.querySelector('.heroesList__hero-modal-borrowed') != null) {
+                document.querySelector('.heroesList__hero-modal-borrowed').remove();
+            }
+        }, 3000);
+    }
+
+    static removeHeroDivFromBasket(target) {
+        target.parentNode.remove();
+    }
 }
 
 
 document.addEventListener('DOMContentLoaded', (e) => {
-    heroes = Store.getBooks();
+    heroes = Store.getHeroes();
+    shoppingBasket = Store.getBasket();
+
     let heroesContainer = document.querySelector('.heroesList');
     let toggle = document.querySelector('.main-nav_toggle-label');
-    
+
     UI.displayHeroes(heroesContainer);
-    
+    UI.displayHeroesBasket();
+
     if (heroesContainer != null) {
         heroesContainer.addEventListener('click', (e) => {
-            UI.createModal(e.target.parentNode.getAttribute("data-hero"));
+            UI.createModal(e.target.parentNode.getAttribute("data-name"), e.target.parentNode.getAttribute("data-index"));
         });
     }
 
@@ -146,8 +234,62 @@ document.addEventListener('DOMContentLoaded', (e) => {
             let description = document.getElementById('description_hero').value;
             let image = document.getElementById('pathImg_hero').value;
             let price = document.getElementById('price_hero').value;
+
             Store.addHeroToList(name, description, image, price);
             e.preventDefault();
-        }   
-    }); 
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.className === 'heroInBasket__delete') {
+            Store.removeHeroFromBasket(e.target.getAttribute("data-name"), e.target.getAttribute("data-index"));
+            UI.removeHeroDivFromBasket(e.target.parentNode);
+            e.preventDefault();
+        }
+    });
 });
+
+let heroesArray_1 = [
+    {
+        name: 'Superman',
+        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        image: './images/superman.jpg',
+        price: 3500,
+        isAvailable: true
+    },
+    {
+        name: 'Hulk',
+        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        image: './images/hulk.jpg',
+        price: 25000,
+        isAvailable: true
+    },
+    {
+        name: 'Thor',
+        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        image: './images/thor.jpg',
+        price: 550000,
+        isAvailable: true
+    },
+    {
+        name: 'Ironman',
+        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        image: './images/ironman.jpg',
+        price: 750000,
+        isAvailable: true
+    },
+    {
+        name: 'Potter',
+        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        image: './images/potter.jpg',
+        price: 125000,
+        isAvailable: true
+    },
+    {
+        name: 'Batman',
+        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        image: './images/batman.jpg',
+        price: 200000,
+        isAvailable: true
+    }
+];
