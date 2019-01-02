@@ -420,7 +420,7 @@ footer {
   .shoppingBasket .heroesInBasket {
     flex-direction: column; }
     .shoppingBasket .heroesInBasket .heroInBasket {
-      width: 100%;
+      width: fit-content;
       flex-direction: column; }
       .shoppingBasket .heroesInBasket .heroInBasket img {
         width: 100%;

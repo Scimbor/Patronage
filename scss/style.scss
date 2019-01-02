@@ -547,7 +547,7 @@ footer {
         .heroesInBasket {
             flex-direction: column;
             .heroInBasket {
-                width: 100%;
+                width: fit-content;
                 flex-direction: column;
                 img{
                     width: 100%;
