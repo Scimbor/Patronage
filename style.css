@@ -428,10 +428,14 @@ footer {
       .shoppingBasket .heroesInBasket .heroInBasket .heroInfo {
         flex-direction: column; }
         .shoppingBasket .heroesInBasket .heroInBasket .heroInfo .heroInBasket__delete {
-          margin-top: 5px;
+          margin-top: 10px;
           font-size: 12px; }
           .shoppingBasket .heroesInBasket .heroInBasket .heroInfo .heroInBasket__delete span {
-            display: none; } }
+            display: none; }
+        .shoppingBasket .heroesInBasket .heroInBasket .heroInfo h4 {
+          padding: 15px 0;
+          text-align: center;
+          font-size: 25px; } }
 
 .showMenu {
   transition: 0.2s;

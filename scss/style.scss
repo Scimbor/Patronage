@@ -557,12 +557,18 @@ footer {
                     flex-direction: column;
 
                     .heroInBasket__delete {
-                        margin-top: 5px;
+                        margin-top: 10px;
                         font-size: 12px;
 
                         span{
                             display: none;
                         }
+                    }
+
+                    h4{
+                        padding: 15px 0;
+                        text-align: center;
+                        font-size: 25px;
                     }
                 }
             }
