@@ -379,7 +379,8 @@ footer {
       .heroesList .heroesList__hero .heroesList__hero-modal-content {
         flex-direction: column;
         overflow: auto;
-        width: 70%; }
+        width: 70%;
+        max-height: 90vh; }
         .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer {
           padding-left: 0; }
           .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer .heroesList__hero-modal-line,

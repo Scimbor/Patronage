@@ -54,20 +54,19 @@ class Store {
     }
 
     static removeHeroFromBasket(nameHero, indexHero) {
-        console.log(`Data-name: ${nameHero}`);
-        shoppingBasket.forEach(hero => {
-            if (hero.name == nameHero) {
+        shoppingBasket.some((el) => {
+            if (el.name == nameHero) {
                 shoppingBasket.splice(indexHero, 1);
-                localStorage.setItem('heroesBasket', JSON.stringify(shoppingBasket));
-                price = price - hero.price;
+                price = price - el.price;
                 document.getElementById('heroesCost').textContent = price;
                 if (price == 0 || shoppingBasket.length == 0) {
                     document.querySelector('.shoppingBasket__state').textContent = 'Twój koszyk jest pusty.';
+                    localStorage.removeItem('heroesBasket');
                 }
             }
         });
-
-        console.log(shoppingBasket);
+        UI.displayHeroesBasket();
+        localStorage.setItem('heroesBasket', JSON.stringify(shoppingBasket));
     }
 }
 
@@ -93,6 +92,10 @@ class UI {
     }
 
     static displayHeroesBasket() {
+        var elements = document.getElementsByClassName('heroInBasket');
+        while (elements[0]) {
+            elements[0].parentNode.removeChild(elements[0]);
+        }
         shoppingBasket.forEach((hero, index) => {
             const div = document.createElement('div');
             div.className = 'heroInBasket';
@@ -114,7 +117,8 @@ class UI {
         if (shoppingBasket.length == 0) {
             document.querySelector('.shoppingBasket__state').textContent = 'Twój koszyk jest pusty.';
             document.getElementById('heroesCost').textContent = price.toString();
-        } else {
+        } else if(shoppingBasket.length > 0){
+            price = 0;
             document.querySelector('.shoppingBasket__state').textContent = '';
             shoppingBasket.forEach(hero => {
                 price = price + parseInt(hero.price);
@@ -163,14 +167,14 @@ class UI {
             });
             if (!found) {
                 Store.addHeroToBasketList(index);
-                UI.addHeroToBasket(nameHero, index);
+                UI.displayHeroesBasket();
             }else{
                 UI.heroMessage('Bohater znajduje sie w koszuku');
             }
         });
     }
 
-    static addHeroToBasket(name, index) {
+    /*static addHeroToBasket(name, index) {
         const div = document.createElement('div');
         div.className = 'heroInBasket';
 
@@ -186,7 +190,7 @@ class UI {
         const container = document.querySelector('.heroesInBasket');
         div.innerHTML = output;
         container.appendChild(div);
-    }
+    }*/
 
     static heroMessage(msg) {
         const div = document.createElement('div');
@@ -250,7 +254,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
         if (e.target && e.target.className === 'heroInBasket__delete') {
             Store.removeHeroFromBasket(e.target.getAttribute("data-name"), e.target.getAttribute("data-index"));
             UI.removeHeroDivFromBasket(e.target.parentNode);
-            e.preventDefault();
         }
     });
 });

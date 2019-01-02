@@ -490,6 +490,7 @@ footer {
                 flex-direction: column;
                 overflow: auto;
                 width: 70%;
+                max-height: 90vh;
                 .heroesList__hero-modal-contentContainer {
                     padding-left: 0;
                     .heroesList__hero-modal-line,
