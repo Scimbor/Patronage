@@ -212,7 +212,10 @@ body {
       display: flex;
       padding: 15px;
       width: calc(100% * (1/3) - 32px - 1px);
-      margin: 10px 0 0 2px; }
+      margin: 10px 0 0 2px;
+      border-right: 1px solid #f3e6e6; }
+      .shoppingBasket .heroesInBasket .heroInBasket:last-child {
+        border-right: none; }
       .shoppingBasket .heroesInBasket .heroInBasket .heroInfo {
         display: flex;
         flex-direction: column; }
@@ -242,6 +245,8 @@ body {
               height: 1.2rem;
               margin: 0 4px 0 0;
               background-color: white; }
+        .shoppingBasket .heroesInBasket .heroInBasket .heroInfo h4, .shoppingBasket .heroesInBasket .heroInBasket .heroInfo p {
+          color: #bbbbbb; }
       .shoppingBasket .heroesInBasket .heroInBasket img {
         width: auto;
         height: 186px;
@@ -308,7 +313,7 @@ footer.addHero__footer {
       width: calc(100% * (1/2) - 40px - 1px);
       flex-direction: column; }
       .shoppingBasket .heroesInBasket .heroInBasket img {
-        height: 281px;
+        height: auto;
         padding-right: 0; }
       .shoppingBasket .heroesInBasket .heroInBasket .heroInfo {
         flex-direction: column; }
@@ -440,10 +445,11 @@ footer.addHero__footer {
     flex-direction: column; }
     .shoppingBasket .heroesInBasket .heroInBasket {
       width: fit-content;
-      flex-direction: column; }
+      flex-direction: column;
+      border-right: none; }
       .shoppingBasket .heroesInBasket .heroInBasket img {
         width: 100%;
-        height: 271px; }
+        height: 100%; }
       .shoppingBasket .heroesInBasket .heroInBasket .heroInfo {
         flex-direction: column; }
         .shoppingBasket .heroesInBasket .heroInBasket .heroInfo .heroInBasket__delete {

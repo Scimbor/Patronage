@@ -264,6 +264,10 @@ body {
             padding: 15px;
             width: calc(100% * (1/3) - 32px - 1px);
             margin: 10px 0 0 2px;
+            border-right: 1px solid #f3e6e6;
+            &:last-child{
+                border-right: none;
+            }
             .heroInfo {
                 display: flex;
                 flex-direction: column;
@@ -296,6 +300,10 @@ body {
                             background-color: white;
                         }
                     }
+                }
+
+                h4, p{
+                    color: #bbbbbb;
                 }
             }
             img {
@@ -393,7 +401,7 @@ footer.addHero__footer{
                 width: calc(100% * (1/2) - 40px - 1px);
                 flex-direction: column;
                 img{
-                    height: 281px;
+                    height: auto;
                     padding-right: 0;
                 }
                 .heroInfo {
@@ -575,9 +583,10 @@ footer.addHero__footer{
             .heroInBasket {
                 width: fit-content;
                 flex-direction: column;
+                border-right: none;
                 img{
                     width: 100%;
-                    height: 271px;
+                    height: 100%;
                 }
                 .heroInfo {
                     flex-direction: column;
