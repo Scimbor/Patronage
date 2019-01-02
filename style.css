@@ -421,6 +421,8 @@ footer {
     flex-direction: column; }
     .shoppingBasket .heroesInBasket .heroInBasket {
       width: calc(100% * (1/1) - 32px - 1px); }
+      .shoppingBasket .heroesInBasket .heroInBasket img {
+        width: 164px; }
       .shoppingBasket .heroesInBasket .heroInBasket .heroInfo {
         flex-direction: column; }
         .shoppingBasket .heroesInBasket .heroInBasket .heroInfo .heroInBasket__delete {
