@@ -143,7 +143,7 @@ body {
         .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer p {
           text-align: justify;
           color: #e3dbd8; }
-    .heroesList .heroesList__hero .close-button {
+    .heroesList .heroesList__hero .modal__close-button {
       width: 2.1rem;
       cursor: pointer;
       position: absolute;
@@ -388,6 +388,10 @@ footer {
           .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer .heroesList__hero-modal-button {
             width: 100%;
             justify-content: center; }
+          .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer .heroesList__hero-modal-button {
+            padding: 0;
+            min-height: 50px;
+            margin-bottom: 10px; }
           .heroesList .heroesList__hero .heroesList__hero-modal-content .heroesList__hero-modal-contentContainer .heroesList__hero-modal-price {
             width: inherit;
             text-align: center; }
@@ -397,7 +401,7 @@ footer {
         .heroesList .heroesList__hero .heroesList__hero-modal-content img {
           width: auto;
           padding-bottom: 10px; }
-      .heroesList .heroesList__hero .close-button {
+      .heroesList .heroesList__hero .modal__close-button {
         position: relative;
         top: unset;
         right: unset;
@@ -421,7 +425,10 @@ footer {
       .shoppingBasket .heroesInBasket .heroInBasket .heroInfo {
         flex-direction: column; }
         .shoppingBasket .heroesInBasket .heroInBasket .heroInfo .heroInBasket__delete {
-          font-size: 12px; } }
+          margin-top: 5px;
+          font-size: 12px; }
+          .shoppingBasket .heroesInBasket .heroInBasket .heroInfo .heroInBasket__delete span {
+            display: none; } }
 
 .showMenu {
   transition: 0.2s;

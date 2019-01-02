@@ -7,12 +7,12 @@ class Store {
         let heroesArray;
         if (localStorage.getItem('heroes') === null) {
             heroesArray = [];
-            heroesArray = heroesArray_1;
+            heroesArray = basicHeroes;
+
             localStorage.setItem('heroes', JSON.stringify(heroesArray));
         } else {
             heroesArray = JSON.parse(localStorage.getItem('heroes'));
         }
-
         return heroesArray;
     }
 
@@ -47,17 +47,16 @@ class Store {
     static addHeroToBasketList(index) {
         shoppingBasket.push(heroes[index]);
         price = price + parseFloat(heroes[index].price);
-        console.log(price);
         document.querySelector('.shoppingBasket__state').textContent = '';
         document.getElementById('heroesCost').textContent = price;
         localStorage.setItem('heroesBasket', JSON.stringify(shoppingBasket));
     }
 
     static removeHeroFromBasket(nameHero, indexHero) {
-        shoppingBasket.some((el) => {
-            if (el.name == nameHero) {
+        shoppingBasket.some((hero) => {
+            if (hero.name == nameHero) {
                 shoppingBasket.splice(indexHero, 1);
-                price = price - el.price;
+                price = price - hero.price;
                 document.getElementById('heroesCost').textContent = price;
                 if (price == 0 || shoppingBasket.length == 0) {
                     document.querySelector('.shoppingBasket__state').textContent = 'Twój koszyk jest pusty.';
@@ -93,9 +92,11 @@ class UI {
 
     static displayHeroesBasket() {
         var elements = document.getElementsByClassName('heroInBasket');
+
         while (elements[0]) {
             elements[0].parentNode.removeChild(elements[0]);
         }
+
         shoppingBasket.forEach((hero, index) => {
             const div = document.createElement('div');
             div.className = 'heroInBasket';
@@ -114,10 +115,10 @@ class UI {
             container.appendChild(div);
         });
 
-        if (shoppingBasket.length == 0) {
+        if (shoppingBasket.length == 0 && document.querySelector('.shoppingBasket__state') != null) {
             document.querySelector('.shoppingBasket__state').textContent = 'Twój koszyk jest pusty.';
             document.getElementById('heroesCost').textContent = price.toString();
-        } else if(shoppingBasket.length > 0){
+        } else if(shoppingBasket.length > 0 && document.querySelector('.shoppingBasket__state') != null){
             price = 0;
             document.querySelector('.shoppingBasket__state').textContent = '';
             shoppingBasket.forEach(hero => {
@@ -144,7 +145,7 @@ class UI {
 
         var output = `
             <div class="heroesList__hero-modal-content">
-                <span class="close-button">&times;</span>
+                <span class="modal__close-button">&times;</span>
                 <img src="${heroes[index].image}" alt="${heroes[index].name}">
                 <div class="heroesList__hero-modal-contentContainer">
                     <h1>I'm ${heroes[index].name}</h1>
@@ -174,29 +175,12 @@ class UI {
         });
     }
 
-    /*static addHeroToBasket(name, index) {
-        const div = document.createElement('div');
-        div.className = 'heroInBasket';
-
-        var output = `
-            <img src="${heroes[index].image}" alt="${heroes[index].name}">
-            <div class="heroInfo">
-                <h4>${heroes[index].name}</h4>
-                <p class="heroInfo__text">${heroes[index].description.slice(1, 100)}...</p>
-                <button class="heroInBasket__delete" data-name="${name}" data-index="${index}">Usuń z koszyka<span>&times;</span></button>
-            </div>`;
-
-        div.innerHTML = output;
-        const container = document.querySelector('.heroesInBasket');
-        div.innerHTML = output;
-        container.appendChild(div);
-    }*/
-
     static heroMessage(msg) {
         const div = document.createElement('div');
-        div.className = `heroesList__hero-modal-borrowed`;
-        div.appendChild(document.createTextNode(msg));
         const container = document.querySelector('.heroesList__hero-modal-contentContainer');
+
+        div.className = `heroesList__hero-modal-borrowed`;
+        div.appendChild(document.createTextNode(msg));  
         container.appendChild(div);
 
         setTimeout(function () {
@@ -233,7 +217,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
     });
 
     document.addEventListener('click', (e) => {
-        if (e.target.className === 'close-button') {
+        if (e.target.className === 'modal__close-button') {
             UI.deleteModal();
         }
     });
@@ -258,7 +242,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
     });
 });
 
-let heroesArray_1 = [
+let basicHeroes = [
     {
         name: 'Superman',
         description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',

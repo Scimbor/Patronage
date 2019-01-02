@@ -179,7 +179,7 @@ body {
                 }
             }
         }
-        .close-button {
+        .modal__close-button {
             width: 2.1rem;
             cursor: pointer;
             position: absolute;
@@ -499,6 +499,11 @@ footer {
                         width: 100%;
                         justify-content: center;
                     }
+                    .heroesList__hero-modal-button{
+                        padding:0;
+                        min-height: 50px;
+                        margin-bottom: 10px;
+                    }
                     .heroesList__hero-modal-price {
                         width: inherit;
                         text-align: center;
@@ -513,7 +518,7 @@ footer {
                     padding-bottom: 10px;
                 }
             }
-            .close-button {
+            .modal__close-button {
                 position: relative;
                 top: unset;
                 right: unset;
@@ -547,7 +552,12 @@ footer {
                     flex-direction: column;
 
                     .heroInBasket__delete {
+                        margin-top: 5px;
                         font-size: 12px;
+
+                        span{
+                            display: none;
+                        }
                     }
                 }
             }
