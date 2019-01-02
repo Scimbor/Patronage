@@ -90,8 +90,8 @@ class UI {
         });
     }
 
-    static displayHeroesBasket(target) {
-        if (target == null) {
+    static displayHeroesBasket() {
+        if (document.querySelector('.heroesInBasket') == null) {
             return 0;
         }
         var elements = document.getElementsByClassName('heroInBasket');
@@ -113,7 +113,7 @@ class UI {
                 </div>`;
 
             div.innerHTML = output;
-            const container = target;
+            const container = document.querySelector('.heroesInBasket');
             div.innerHTML = output;
             container.appendChild(div);
         });
@@ -205,10 +205,9 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
     let heroesContainer = document.querySelector('.heroesList');
     let toggle = document.querySelector('.main-nav_toggle-label');
-    let heroesBasketList = document.querySelector('.heroesInBasket');
 
     UI.displayHeroes(heroesContainer);
-    UI.displayHeroesBasket(heroesBasketList);
+    UI.displayHeroesBasket();
 
     if (heroesContainer != null) {
         heroesContainer.addEventListener('click', (e) => {
