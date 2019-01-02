@@ -15,7 +15,7 @@ body {
 
 .main-nav-height {
   height: unset !important;
-  background-image: url("images/newheader.jpg");
+  background-image: url("../images/newheader.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center; }
@@ -232,7 +232,8 @@ body {
           color: white;
           text-transform: uppercase;
           justify-content: space-evenly;
-          font-size: 1vw; }
+          font-size: 1vw;
+          cursor: pointer; }
           .shoppingBasket .heroesInBasket .heroInBasket .heroInfo .heroInBasket__delete span {
             display: flex;
             align-items: center; }
@@ -245,7 +246,7 @@ body {
               margin: 0 4px 0 0;
               background-color: white; }
       .shoppingBasket .heroesInBasket .heroInBasket img {
-        width: 151px;
+        width: auto;
         height: 186px;
         padding-right: 20px; }
   .shoppingBasket .shoppingBasket__state {

@@ -17,7 +17,7 @@ body {
 
 .main-nav-height {
     height: unset !important;
-    background-image: url('images/newheader.jpg');
+    background-image: url('../images/newheader.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -285,6 +285,7 @@ body {
                     text-transform: uppercase;
                     justify-content: space-evenly;
                     font-size: 1vw;
+                    cursor: pointer;
                     span {
                         display: flex;
                         align-items: center;
@@ -301,7 +302,7 @@ body {
                 }
             }
             img {
-                width: 151px;
+                width: auto;
                 height: 186px;
                 padding-right: 20px;
             }
