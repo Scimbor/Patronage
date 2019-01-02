@@ -54,7 +54,7 @@ class Store {
     }
 
     static removeHeroFromBasket(nameHero, indexHero) {
-        console.log(`Data-hero: ${nameHero}`);
+        console.log(`Data-name: ${nameHero}`);
         shoppingBasket.forEach(hero => {
             if (hero.name == nameHero) {
                 shoppingBasket.splice(indexHero, 1);
@@ -127,7 +127,7 @@ class UI {
         document.querySelector('.heroesList__hero-modal').remove();
     }
 
-    static createModal(name, index) {
+    static createModal(nameHero, index) {
 
         if (document.querySelector('.heroesList__hero-modal')) {
             return 0;
@@ -158,9 +158,15 @@ class UI {
         let heroButtton = document.querySelector('.heroesList__hero-modal-button');
 
         heroButtton.addEventListener('click', (e) => {
-            Store.addHeroToBasketList(index);
-            UI.addHeroToBasket(name, index);
-            console.log('Bohater dodany do koszyka');
+            let found = shoppingBasket.some((el) => {
+                return el.name === nameHero;
+            });
+            if (!found) {
+                Store.addHeroToBasketList(index);
+                UI.addHeroToBasket(nameHero, index);
+            }else{
+                UI.heroMessage('Bohater znajduje sie w koszuku');
+            }
         });
     }
 
