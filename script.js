@@ -2,18 +2,65 @@ let shoppingBasket = [];
 let heroes = [];
 let price = (0).toFixed(2);
 
+class requestsHTTP {
+    async get(url) {
+        const response = await fetch(url);
+        const resData = await response.json();
+
+        return resData;
+    }
+
+    async post(url, data) {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const resData = await response;
+
+        return resData;
+    }
+
+    async put(url, data) {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const resData = await response.json();
+
+        return resData;
+    }
+
+    async delete(url) {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        });
+
+        const resData = await 'Resource deleted';
+        return resData;
+    }
+}
+
 class Store {
     static getHeroes() {
-        let heroesArray;
-        if (localStorage.getItem('heroes') === null) {
-            heroesArray = [];
-            heroesArray = basicHeroes;
+        const http = new requestsHTTP;
 
-            localStorage.setItem('heroes', JSON.stringify(heroesArray));
-        } else {
-            heroesArray = JSON.parse(localStorage.getItem('heroes'));
-        }
-        return heroesArray;
+        http.get("http://localhost:3000/heroes").then(res => {
+            if (res != null) {
+                heroes = res;
+                UI.displayHeroes(document.querySelector('.heroesList'));
+            }
+        }).catch(err => console.log(err));
     }
 
     static getBasket() {
@@ -27,11 +74,11 @@ class Store {
         return basketArray;
     }
 
-    static addHeroToList(name, description, image, price, isAvailable = true) {
+    static addAndEditHero(name, description, image, price, isAvailable, typeRequest, link) {
         if (name === '' || description === '' || image === '' || price == '') {
-            document.getElementById('dangerFill').style.opacity = '1';
+            document.getElementById('dangerFill').classList.add("dangerFill");
         } else {
-            var hero = {
+            let hero = {
                 name,
                 description,
                 image,
@@ -39,14 +86,27 @@ class Store {
                 isAvailable
             }
 
-            heroes.unshift(hero);
-            localStorage.setItem('heroes', JSON.stringify(heroes));
+            const http = new requestsHTTP;
+            if (typeRequest === "POST") {
+                let found = heroes.some((hero) => {
+                    return hero.name === name;
+                });
+
+                if (!found) {
+                    http.post(link, hero).then(() => console.log('Bohater dodany !')).catch(error => console.log(error));
+                } else {
+                    document.getElementById('dangerHero').classList.add("dangerHero");
+                }
+            } else if (typeRequest === "PUT") {
+                http.put(link, hero).then(res => console.log(res)).catch(error => console.log(error));
+                UI.generateSelectHeroes(document.querySelector('.selectHero'));
+            }
         }
     }
 
-    static addHeroToBasketList(index) {
-        shoppingBasket.push(heroes[index]);
-        price = price + parseFloat(heroes[index].price);
+    static addHeroToBasketList(hero) {
+        shoppingBasket.push(hero);
+        price = price + parseFloat(hero.price);
         document.querySelector('.shoppingBasket__state').textContent = '';
         document.getElementById('heroesCost').textContent = price;
         localStorage.setItem('heroesBasket', JSON.stringify(shoppingBasket));
@@ -94,7 +154,8 @@ class UI {
         if (document.querySelector('.heroesInBasket') == null) {
             return 0;
         }
-        var elements = document.getElementsByClassName('heroInBasket');
+
+        let elements = document.getElementsByClassName('heroInBasket');
 
         while (elements[0]) {
             elements[0].parentNode.removeChild(elements[0]);
@@ -104,11 +165,11 @@ class UI {
             const div = document.createElement('div');
             div.className = 'heroInBasket';
 
-            var output = `
+            let output = `
                 <img src="${hero.image}" alt="${hero.name}">
                 <div class="heroInfo">
                     <h4>${hero.name}</h4>
-                    <p class="heroInfo__text">${hero.description.slice(1, 100)}...</p>
+                    <p class="heroInfo__text">${hero.description.slice(0, 100)}...</p>
                     <button class="heroInBasket__delete" data-name="${hero.name}" data-index="${index}">Usuń z koszyka<span>&times;</span></button>
                 </div>`;
 
@@ -120,7 +181,7 @@ class UI {
 
         if (shoppingBasket.length == 0 && document.querySelector('.shoppingBasket__state') != null) {
             document.querySelector('.shoppingBasket__state').textContent = 'Twój koszyk jest pusty.';
-            document.getElementById('heroesCost').textContent = `${parseFloat(price).toFixed(2)} zł` ;
+            document.getElementById('heroesCost').textContent = `${parseFloat(price).toFixed(2)} zł`;
             document.getElementById('heroesCost').style.color = 'red';
         } else if (shoppingBasket.length > 0 && document.querySelector('.shoppingBasket__state') != null) {
             price = 0;
@@ -142,42 +203,51 @@ class UI {
             return 0;
         }
 
-        const div = document.createElement('div');
-        const container = document.querySelector('.heroesList__hero');
+        const http = new requestsHTTP;
+        
 
-        div.className = `heroesList__hero-modal show-modal`;
+        let hero = {};
+        http.get(`http://localhost:3000/heroes/${nameHero}`).then(res => {
+            if (res != null) {
+                hero = res;
+                const div = document.createElement('div');
+                const container = document.querySelector('.heroesList__hero');
 
-        var output = `
-            <div class="heroesList__hero-modal-content">
-                <span class="modal__close-button">&times;</span>
-                <img src="${heroes[index].image}" alt="${heroes[index].name}">
-                <div class="heroesList__hero-modal-contentContainer">
-                    <h1>I'm ${heroes[index].name}</h1>
-                    <span class="heroesList__hero-modal-line"></span>
-                    <p>${heroes[index].description}</p>
-                    <p class="heroesList__hero-modal-price">Wynajem: ${heroes[index].price} zl/h</p>
-                    <button class="heroesList__hero-modal-button"  data-name="${heroes[index].name}" data-index="${index}">Dodaj do koszyka</button>
-                </div>
-            </div>`;
+                div.className = `heroesList__hero-modal show-modal`;
+
+                let output = `
+                    <div class="heroesList__hero-modal-content">
+                        <span class="modal__close-button">&times;</span>
+                        <img src="${hero["image"]}" alt="${hero.name}">
+                        <div class="heroesList__hero-modal-contentContainer">
+                            <h1>I'm ${hero.name}</h1>
+                            <span class="heroesList__hero-modal-line"></span>
+                            <p>${hero.description}</p>
+                            <p class="heroesList__hero-modal-price">Wynajem: ${hero.price} zl/h</p>
+                            <button class="heroesList__hero-modal-button"  data-name="${hero.name}" data-index="${index}">Dodaj do koszyka</button>
+                        </div>
+                    </div>`;
 
 
-        div.innerHTML = output;
-        container.appendChild(div);
+                div.innerHTML = output;
+                container.appendChild(div);
 
-        let heroButtton = document.querySelector('.heroesList__hero-modal-button');
+                let heroButtton = document.querySelector('.heroesList__hero-modal-button');
 
-        heroButtton.addEventListener('click', (e) => {
-            let found = shoppingBasket.some((el) => {
-                return el.name === nameHero;
-            });
-            if (!found) {
-                Store.addHeroToBasketList(index);
-                UI.displayHeroesBasket();
-                document.getElementById('heroesCost').style.color = 'black';
-            } else {
-                UI.heroMessage('Bohater znajduje sie w koszuku');
+                heroButtton.addEventListener('click', (e) => {
+                    let found = shoppingBasket.some((el) => {
+                        return el.name === nameHero;
+                    });
+                    if (!found) {
+                        Store.addHeroToBasketList(hero);
+                        UI.displayHeroesBasket();
+                        document.getElementById('heroesCost').style.color = 'black';
+                    } else {
+                        UI.heroMessage('Bohater znajduje sie w koszuku');
+                    }
+                });
             }
-        });
+        }).catch(err => console.log(err));
     }
 
     static heroMessage(msg) {
@@ -188,7 +258,7 @@ class UI {
         div.appendChild(document.createTextNode(msg));
         container.appendChild(div);
 
-        setTimeout(function () {
+        setTimeout(() => {
             if (document.querySelector('.heroesList__hero-modal-borrowed') != null) {
                 document.querySelector('.heroesList__hero-modal-borrowed').remove();
             }
@@ -198,18 +268,73 @@ class UI {
     static removeHeroDivFromBasket(target) {
         target.parentNode.remove();
     }
+
+    static getHeroData(target, selectHero) {
+        if (target == null) {
+            return;
+        }
+
+        const http = new requestsHTTP;
+        http.get(`http://localhost:3000/heroes/${selectHero}`).then(data => {
+            console.log(data);
+            document.getElementById('pathImg_hero').value = data.image;
+            document.getElementById('price_hero').value = data.price;
+            document.getElementById('description_hero').value = data.description;
+        }).catch(error => console.log(error));
+    }
+
+    static generateOptionsUI() {
+        const http = new requestsHTTP;
+        let newList = document.createElement('ul');
+        let container = document.querySelector('.form__control-input');
+        let select = document.querySelector('.selectHero');
+
+        newList.className = "selectHeroList";
+
+        http.get("http://localhost:3000/heroes").then(data => {
+
+            data.forEach(hero => {
+                let li = document.createElement('li');
+                li.className = 'li-item';
+                li.setAttribute('data-name', hero.name);
+                li.appendChild(document.createTextNode(hero.name))
+                newList.appendChild(li);
+            });
+
+            container.insertBefore(newList, select);
+        }).catch(err => console.log(err));
+    }
+
+    static generateSelectHeroes(target) {
+        if (target == null) {
+            return;
+        }
+
+        const http = new requestsHTTP;
+
+        http.get("http://localhost:3000/heroes").then(data => {
+            let select = document.querySelector('.selectHero');
+
+            data.forEach(hero => {
+                let option = document.createElement('option');
+                option.setAttribute('value', hero.name);
+                option.text = hero.name;
+                select.appendChild(option);
+            });
+        }).catch(err => console.log(err));
+    }
 }
 
 
 document.addEventListener('DOMContentLoaded', (e) => {
-    heroes = Store.getHeroes();
+    Store.getHeroes();
     shoppingBasket = Store.getBasket();
 
-    let heroesContainer = document.querySelector('.heroesList');
     let toggle = document.querySelector('.main-nav_toggle-label');
+    let heroesContainer = document.querySelector('.heroesList');
 
-    UI.displayHeroes(heroesContainer);
     UI.displayHeroesBasket();
+    UI.generateSelectHeroes(document.querySelector('.selectHero'));
 
     if (heroesContainer != null) {
         heroesContainer.addEventListener('click', (e) => {
@@ -228,14 +353,20 @@ document.addEventListener('DOMContentLoaded', (e) => {
     });
 
     document.addEventListener('click', (e) => {
-        if (e.target && e.target.id === 'addHero') {
-            let name = document.getElementById('name_hero').value;
+        if (document.getElementById('editForm') != null || document.getElementById('addForm') != null) {
+            let name;
             let description = document.getElementById('description_hero').value;
             let image = document.getElementById('pathImg_hero').value;
             let price = document.getElementById('price_hero').value;
 
-            Store.addHeroToList(name, description, image, price);
-            e.preventDefault();
+            if (e.target && e.target.id == 'addHero') {
+                name = document.getElementById('name_hero').value;
+                Store.addAndEditHero(name, description, image, price, true, "POST", "http://localhost:3000/heroes");
+                e.preventDefault();
+            } else if (e.target && e.target.id == 'editHero') {
+                name = document.getElementById('selectEditHero').value;
+                Store.addAndEditHero(name, description, image, price, true, "PUT", `http://localhost:3000/heroes/${name}`);
+            }
         }
     });
 
@@ -245,49 +376,47 @@ document.addEventListener('DOMContentLoaded', (e) => {
             UI.removeHeroDivFromBasket(e.target.parentNode);
         }
     });
-});
 
-let basicHeroes = [
-    {
-        name: 'Superman',
-        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        image: './images/superman.jpg',
-        price: 3500,
-        isAvailable: true
-    },
-    {
-        name: 'Hulk',
-        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        image: './images/hulk.jpg',
-        price: 25000,
-        isAvailable: true
-    },
-    {
-        name: 'Thor',
-        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        image: './images/thor.jpg',
-        price: 550000,
-        isAvailable: true
-    },
-    {
-        name: 'Ironman',
-        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        image: './images/ironman.jpg',
-        price: 750000,
-        isAvailable: true
-    },
-    {
-        name: 'Potter',
-        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        image: './images/potter.jpg',
-        price: 125000,
-        isAvailable: true
-    },
-    {
-        name: 'Batman',
-        description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        image: './images/batman.jpg',
-        price: 200000,
-        isAvailable: true
-    }
-];
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.id === 'clearDatabase') {
+            const http = new requestsHTTP;
+            http.delete("http://localhost:3000/heroes").then(res => console.log('Baza bohaterów została wyczyszczona')).catch(err => console.log(err));
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.className === 'removeHero__button') {
+            const http = new requestsHTTP;
+            let select = document.getElementById('selectRemoveHero').value;
+
+            http.delete(`http://localhost:3000/heroes/${select}`).then(res => {
+                console.log('Bohater usunięty');
+            }).catch(err => console.log(err));
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.className === 'arrow-select') {
+            UI.generateOptionsUI();
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target && e.target.className === 'li-item') {
+            let selectHero;
+            if (document.getElementById('selectEditHero')) {
+                document.getElementById('selectEditHero').value = e.target.getAttribute('data-name');
+                selectHero = document.getElementById('selectEditHero').value;
+            } else if (document.getElementById('selectRemoveHero')) {
+                document.getElementById('selectRemoveHero').value = e.target.getAttribute('data-name');
+                selectHero = document.getElementById('selectRemoveHero').value;
+            }
+            document.querySelector('.li-item').parentNode.remove();
+
+
+            if (selectHero != "Wybierz bohatera") {
+                UI.getHeroData(document.getElementById('editForm'), selectHero);
+            }
+        }
+    });
+});

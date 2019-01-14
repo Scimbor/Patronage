@@ -83,13 +83,12 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 4em;
     .heroesList__hero {
-        
         text-align: center;
         margin-bottom: 50px;
         cursor: pointer;
         .heroesList__hero-img {
             width: 100%;
-            height: 92%;
+            height: 500px;
         }
         .heroesList__hero-modal {
             position: fixed;
@@ -105,7 +104,7 @@ body {
             transition: 0.2s all;
             z-index: 2;
             img {
-                width: 100%;
+                width: 240px;
                 height: calc(100% * 1.75);
             }
         }
@@ -159,7 +158,7 @@ body {
                         margin-bottom: 10px;
                     }
                 }
-                .heroesList__hero-modal-borrowed{
+                .heroesList__hero-modal-borrowed {
                     text-align: left;
                     padding: 15px 0;
                     width: fit-content;
@@ -195,7 +194,8 @@ body {
     }
 }
 
-.form {
+.form,
+.removeHero {
     width: 50%;
     margin: 50px auto;
     display: flex;
@@ -204,10 +204,26 @@ body {
     align-items: center;
     padding: 40px 0;
     box-shadow: 0px 4px 15px -3px rgba(0, 0, 0, 0.75);
+    .removeHero__text {
+        color: #5f92c9;
+        width: 70%;
+        margin: 0 auto;
+        padding: 10px 0;
+        font-size: 13px;
+    }
+    .selectHero {
+        width: 100%;
+        margin: 0 auto;
+        border: none;
+        outline: none; 
+        background: transparent;
+    }
+    
     .form__control {
         width: 100%;
         margin-bottom: 15px;
         .form__control-input {
+            position: relative;
             display: block;
             margin: 0 auto;
             width: 66%;
@@ -227,7 +243,8 @@ body {
             resize: none;
         }
     }
-    .form__button {
+    .form__button,
+    .removeHero__button {
         background-color: #5f92c9;
         color: white;
         border: none;
@@ -265,7 +282,7 @@ body {
             width: calc(100% * (1/3) - 32px - 1px);
             margin: 10px 0 0 2px;
             border-right: 1px solid #f3e6e6;
-            &:last-child{
+            &:last-child {
                 border-right: none;
             }
             .heroInfo {
@@ -301,8 +318,8 @@ body {
                         }
                     }
                 }
-
-                h4, p{
+                h4,
+                p {
                     color: #bbbbbb;
                 }
             }
@@ -329,15 +346,15 @@ footer {
     color: white;
 }
 
-footer.addHero__footer{
+footer.addHero__footer {
     position: fixed;
     bottom: 0;
     z-index: -3;
 }
 
-.danger{
-    color:red;
-    font-size:10px;
+.danger {
+    color: red;
+    font-size: 10px;
     font-weight: bold;
     text-align: center;
     height: 0;
@@ -345,8 +362,53 @@ footer.addHero__footer{
     transition: 0.2s all;
 }
 
-.dangerFill{
+.dangerFill, .dangerHero {
+    opacity: 1 !important;
     padding: 10px 0;
+}
+
+select {
+    position: relative;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+.selectHeroList{
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    background: #ececec;
+    border-radius: 4px;
+    height: auto;
+
+    li{
+        padding: 5px;
+    }
+}
+
+.arrow-select{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 0.6em;
+    padding-right: 2px;
+    right: 0;
+    width: 100%;
+    z-index: 1;
+
+    &:after{
+        content:'\25bc';
+        display: block;
+        margin-top: -1px;
+    }
+    &:before{
+        content: '\25b2';
+        display: block;
+        margin-bottom: -1px;
+    }
 }
 
 @media only screen and (max-width:1300px) {
@@ -384,8 +446,7 @@ footer.addHero__footer{
         .heroesList__hero {
             .heroesList__hero-modal-content {
                 width: 600px;
-
-                img{
+                img {
                     width: 50%;
                 }
             }
@@ -400,28 +461,24 @@ footer.addHero__footer{
                 padding: 15px;
                 width: calc(100% * (1/2) - 40px - 1px);
                 flex-direction: column;
-                img{
-                    height: auto;
+                img {
+                    height: 500px;
                     padding-right: 0;
                 }
                 .heroInfo {
                     flex-direction: column;
-
                     .heroInBasket__delete {
                         margin-top: 10px;
                         font-size: 12px;
-
-                        span{
+                        span {
                             display: none;
                         }
                     }
-
-                    h4{
+                    h4 {
                         padding: 15px 0;
                         text-align: center;
                         font-size: 25px;
                     }
-                    
                     .heroInBasket__delete {
                         font-size: 1.3vw;
                     }
@@ -490,14 +547,14 @@ footer.addHero__footer{
                 }
             }
         }
-        #toggle:checked + .main-nav__menu {
+        #toggle:checked+.main-nav__menu {
             transition: 0.2s;
             left: 0;
         }
     }
     .main-nav__menu {
         position: absolute;
-        top:0;
+        top: 0;
         left: -100%;
         flex-direction: column;
         justify-content: flex-start;
@@ -522,6 +579,9 @@ footer.addHero__footer{
             display: flex;
             flex-direction: column;
             padding-bottom: 30px;
+            .heroesList__hero-img {
+                height: auto;
+            }
             .heroesList__hero-modal-content {
                 flex-direction: column;
                 overflow: auto;
@@ -534,8 +594,8 @@ footer.addHero__footer{
                         width: 100%;
                         justify-content: center;
                     }
-                    .heroesList__hero-modal-button{
-                        padding:0;
+                    .heroesList__hero-modal-button {
+                        padding: 0;
                         min-height: 50px;
                         margin-bottom: 10px;
                     }
@@ -549,6 +609,7 @@ footer.addHero__footer{
                     }
                 }
                 img {
+                    width: 100%;
                     padding-bottom: 10px;
                 }
             }
@@ -575,7 +636,7 @@ footer.addHero__footer{
         }
     }
     .shoppingBasket {
-        .shoppingBasket__info{
+        .shoppingBasket__info {
             flex-direction: column;
         }
         .heroesInBasket {
@@ -584,23 +645,21 @@ footer.addHero__footer{
                 width: fit-content;
                 flex-direction: column;
                 border-right: none;
-                img{
+                margin: 0 auto;
+                img {
                     width: 100%;
                     height: 100%;
                 }
                 .heroInfo {
                     flex-direction: column;
-
                     .heroInBasket__delete {
                         margin-top: 10px;
                         font-size: 12px;
-
-                        span{
+                        span {
                             display: none;
                         }
                     }
-
-                    h4{
+                    h4 {
                         padding: 15px 0;
                         text-align: center;
                         font-size: 25px;
@@ -611,7 +670,9 @@ footer.addHero__footer{
     }
 }
 
-.showMenu{
+.showMenu {
     transition: 0.2s;
     left: 0 !important;
 }
+
+//Loader

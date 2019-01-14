@@ -1,0 +1,32 @@
+{
+  "heroes": [
+    {
+      "name": "Deadpool",
+      "description": "fgrewrgrtwrtrgwrgtwgwgwgwergewgewrgew",
+      "image": "images/deadpools.jpg",
+      "price": "9500000",
+      "isAvailable": true
+    },
+    {
+      "name": "Spiderman",
+      "description": "fdsfdslfn sdkjn glafhkgnljkafnlkjresabkj;rebkj;rebwkj;n;keql",
+      "image": "E:\\Moje\\patronage-zad-01_final\\WebSite\\images\\spiderman.jpg",
+      "price": "15000",
+      "isAvailable": true
+    },
+    {
+      "name": "Superman",
+      "description": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+      "image": "images/superman.jpg",
+      "price": "24000",
+      "isAvailable": true
+    },
+    {
+      "name": "Hulk",
+      "description": "fsfsdfsdfsdfsdfsd",
+      "image": "images/hulk.jpg",
+      "price": "100000",
+      "isAvailable": true
+    }
+  ]
+}

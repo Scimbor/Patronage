@@ -34,7 +34,7 @@
                     <a href="addHero.html" class="main-nav__menu-item-link">Dodaj herosa</a>
                 </li>
                 <li class="main-nav__menu-item">
-                    <a href="editHero.html" class="main-nav__menu-item-link">Edytuj herosa</a>
+                    <a class="main-nav__menu-item-link">Edytuj herosa</a>
                 </li>
                 <li class="main-nav__menu-item">
                     <a href="removeHero.html" class="main-nav__menu-item-link">Usuń herosa</a>
@@ -49,13 +49,16 @@
         </div>
         <img class="main-nav_backgroundDiv" src="./images/newHeader.jpg" alt="banner">
     </nav>
-    <p class="danger" id="dangerFill">Wymagane są wsystkie pola.</p>
-    <p class="danger" id="dangerHero">Bohater istnieje w bazie.</p>
-    <form class="form" id="addForm">
-        <h2>Dodaj herosa</h2>
+    <form class="form" id="editForm">
+        <h2>Edytuj herosa</h2>
+
         <div class="form__control">
-            <input type="text" name="name" id="name_hero" placeholder="Nazwa Bohatera" class="form__control-input">
-            <p class="danger">Wymagane są minimum 2 litery.</p>
+            <div class="form__control-input">
+                <span class="arrow-select"></span>
+                <select class="selectHero" id="selectEditHero">\
+                    <option>--- Wybierz ---</option>
+                </select>
+            </div>
         </div>
 
         <div class="form__control">
@@ -67,10 +70,10 @@
         </div>
 
         <div class="form__control">
-            <textarea type="text" name="price_hero" id="description_hero" placeholder="Opisa bohatera" class="form__control-input form__control-textarea"></textarea>
+            <textarea type="text" name="description_hero" id="description_hero" placeholder="Opis bohatera" class="form__control-input form__control-textarea"></textarea>
         </div>
 
-        <input type="submit" value="Submit" class="form__button" id="addHero">
+        <button type="submit" class="form__button" id="editHero">Edytuj</button>
     </form>
 
     <footer class="addHero__footer">

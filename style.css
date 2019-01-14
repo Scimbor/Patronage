@@ -68,7 +68,7 @@ body {
     cursor: pointer; }
     .heroesList .heroesList__hero .heroesList__hero-img {
       width: 100%;
-      height: 92%; }
+      height: 500px; }
     .heroesList .heroesList__hero .heroesList__hero-modal {
       position: fixed;
       left: 0;
@@ -83,7 +83,7 @@ body {
       transition: 0.2s all;
       z-index: 2; }
       .heroesList .heroesList__hero .heroesList__hero-modal img {
-        width: 100%;
+        width: 240px;
         height: calc(100% * 1.75); }
     .heroesList .heroesList__hero .heroesList__hero-modal-content {
       position: absolute;
@@ -155,7 +155,8 @@ body {
       transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
       overflow: scroll; }
 
-.form {
+.form,
+.removeHero {
   width: 50%;
   margin: 50px auto;
   display: flex;
@@ -164,10 +165,27 @@ body {
   align-items: center;
   padding: 40px 0;
   box-shadow: 0px 4px 15px -3px rgba(0, 0, 0, 0.75); }
-  .form .form__control {
+  .form .removeHero__text,
+  .removeHero .removeHero__text {
+    color: #5f92c9;
+    width: 70%;
+    margin: 0 auto;
+    padding: 10px 0;
+    font-size: 13px; }
+  .form .selectHero,
+  .removeHero .selectHero {
+    width: 100%;
+    margin: 0 auto;
+    border: none;
+    outline: none;
+    background: transparent; }
+  .form .form__control,
+  .removeHero .form__control {
     width: 100%;
     margin-bottom: 15px; }
-    .form .form__control .form__control-input {
+    .form .form__control .form__control-input,
+    .removeHero .form__control .form__control-input {
+      position: relative;
       display: block;
       margin: 0 auto;
       width: 66%;
@@ -175,14 +193,20 @@ body {
       border: none;
       border-bottom: 1px solid #e2e2e2;
       padding-bottom: 8px; }
-      .form .form__control .form__control-input::placeholder {
+      .form .form__control .form__control-input::placeholder,
+      .removeHero .form__control .form__control-input::placeholder {
         color: #dedede; }
-      .form .form__control .form__control-input:focus {
+      .form .form__control .form__control-input:focus,
+      .removeHero .form__control .form__control-input:focus {
         outline: none; }
-    .form .form__control .form__control-textarea {
+    .form .form__control .form__control-textarea,
+    .removeHero .form__control .form__control-textarea {
       height: 30px;
       resize: none; }
-  .form .form__button {
+  .form .form__button,
+  .form .removeHero__button,
+  .removeHero .form__button,
+  .removeHero .removeHero__button {
     background-color: #5f92c9;
     color: white;
     border: none;
@@ -245,7 +269,8 @@ body {
               height: 1.2rem;
               margin: 0 4px 0 0;
               background-color: white; }
-        .shoppingBasket .heroesInBasket .heroInBasket .heroInfo h4, .shoppingBasket .heroesInBasket .heroInBasket .heroInfo p {
+        .shoppingBasket .heroesInBasket .heroInBasket .heroInfo h4,
+        .shoppingBasket .heroesInBasket .heroInBasket .heroInfo p {
           color: #bbbbbb; }
       .shoppingBasket .heroesInBasket .heroInBasket img {
         width: auto;
@@ -278,8 +303,45 @@ footer.addHero__footer {
   opacity: 0;
   transition: 0.2s all; }
 
-.dangerFill {
+.dangerFill, .dangerHero {
+  opacity: 1 !important;
   padding: 10px 0; }
+
+select {
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: ''; }
+
+.selectHeroList {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  background: #ececec;
+  border-radius: 4px;
+  height: auto; }
+  .selectHeroList li {
+    padding: 5px; }
+
+.arrow-select {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.6em;
+  padding-right: 2px;
+  right: 0;
+  width: 100%;
+  z-index: 1; }
+  .arrow-select:after {
+    content: '\25bc';
+    display: block;
+    margin-top: -1px; }
+  .arrow-select:before {
+    content: '\25b2';
+    display: block;
+    margin-bottom: -1px; }
 
 @media only screen and (max-width: 1300px) {
   .main-nav .main-nav__menu {
@@ -313,7 +375,7 @@ footer.addHero__footer {
       width: calc(100% * (1/2) - 40px - 1px);
       flex-direction: column; }
       .shoppingBasket .heroesInBasket .heroInBasket img {
-        height: auto;
+        height: 500px;
         padding-right: 0; }
       .shoppingBasket .heroesInBasket .heroInBasket .heroInfo {
         flex-direction: column; }
@@ -401,6 +463,8 @@ footer.addHero__footer {
       display: flex;
       flex-direction: column;
       padding-bottom: 30px; }
+      .heroesList .heroesList__hero .heroesList__hero-img {
+        height: auto; }
       .heroesList .heroesList__hero .heroesList__hero-modal-content {
         flex-direction: column;
         overflow: auto;
@@ -423,6 +487,7 @@ footer.addHero__footer {
             text-align: center;
             width: 100%; }
         .heroesList .heroesList__hero .heroesList__hero-modal-content img {
+          width: 100%;
           padding-bottom: 10px; }
       .heroesList .heroesList__hero .modal__close-button {
         position: relative;
@@ -446,7 +511,8 @@ footer.addHero__footer {
     .shoppingBasket .heroesInBasket .heroInBasket {
       width: fit-content;
       flex-direction: column;
-      border-right: none; }
+      border-right: none;
+      margin: 0 auto; }
       .shoppingBasket .heroesInBasket .heroInBasket img {
         width: 100%;
         height: 100%; }

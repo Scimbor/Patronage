@@ -34,10 +34,10 @@
                     <a href="addHero.html" class="main-nav__menu-item-link">Dodaj herosa</a>
                 </li>
                 <li class="main-nav__menu-item">
-                    <a href="editHero.html" class="main-nav__menu-item-link">Edytuj herosa</a>
+                    <a class="main-nav__menu-item-link">Edytuj herosa</a>
                 </li>
                 <li class="main-nav__menu-item">
-                    <a href="removeHero.html" class="main-nav__menu-item-link">Usuń herosa</a>
+                    <a class="main-nav__menu-item-link">Usuń herosa</a>
                 </li>
                 <li class="main-nav__menu-item">
                     <a class="main-nav__menu-item-link">Wyczyść baze</a>
@@ -49,29 +49,17 @@
         </div>
         <img class="main-nav_backgroundDiv" src="./images/newHeader.jpg" alt="banner">
     </nav>
-    <p class="danger" id="dangerFill">Wymagane są wsystkie pola.</p>
-    <p class="danger" id="dangerHero">Bohater istnieje w bazie.</p>
-    <form class="form" id="addForm">
-        <h2>Dodaj herosa</h2>
+    <div class="removeHero">
+        <h2>Usuń herosa :-(</h2>
+        <p class="removeHero__text">Wybierz istniejącego herosa</p>
         <div class="form__control">
-            <input type="text" name="name" id="name_hero" placeholder="Nazwa Bohatera" class="form__control-input">
-            <p class="danger">Wymagane są minimum 2 litery.</p>
+            <div class="form__control-input">
+                    <span class="arrow-select"></span>
+                <select class="selectHero" id="selectRemoveHero"></select>
+            </div>
         </div>
-
-        <div class="form__control">
-            <input type="text" name="pathImg_hero" id="pathImg_hero" placeholder="Adres/nazwa zdjecia" class="form__control-input">
-        </div>
-
-        <div class="form__control">
-            <input type="number" name="price_hero" id="price_hero" placeholder="Cena wynajmu/h" class="form__control-input">
-        </div>
-
-        <div class="form__control">
-            <textarea type="text" name="price_hero" id="description_hero" placeholder="Opisa bohatera" class="form__control-input form__control-textarea"></textarea>
-        </div>
-
-        <input type="submit" value="Submit" class="form__button" id="addHero">
-    </form>
+        <button class="removeHero__button">Usuń herosa</button>
+    </div>
 
     <footer class="addHero__footer">
         <p>Need a hero. Pure JS/CSS/ Aplikacja do ćwiczenia nabytej wiedzy o JavaScript</p>
