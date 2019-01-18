@@ -52,6 +52,9 @@
     <p class="danger" id="dangerFill">Wymagane są wsystkie pola.</p>
     <p class="danger" id="dangerHero">Bohater istnieje w bazie.</p>
     <form class="form" id="addForm">
+        <div class="loaderContainer" id="loader">
+            <div class="loader"></div>
+        </div>
         <h2>Dodaj herosa</h2>
         <div class="form__control">
             <input type="text" name="name" id="name_hero" placeholder="Nazwa Bohatera" class="form__control-input">
@@ -72,7 +75,6 @@
 
         <input type="submit" value="Submit" class="form__button" id="addHero">
     </form>
-
     <footer class="addHero__footer">
         <p>Need a hero. Pure JS/CSS/ Aplikacja do ćwiczenia nabytej wiedzy o JavaScript</p>
     </footer>

@@ -50,10 +50,11 @@
         <img class="main-nav_backgroundDiv" src="./images/newHeader.jpg" alt="banner">
     </nav>
     <form class="form" id="editForm">
-        <h2>Edytuj herosa</h2>
+        <h2 class="form__title">Edytuj herosa</h2>
 
         <div class="form__control">
-            <div class="form__control-input">
+            <p class="form__control form__control-title">Wybierz istniejącego herosa</p>
+            <div class="form__control-input form__control-margin">
                 <span class="arrow-select"></span>
                 <select class="selectHero" id="selectEditHero">\
                     <option>--- Wybierz ---</option>
@@ -62,15 +63,18 @@
         </div>
 
         <div class="form__control">
-            <input type="text" name="pathImg_hero" id="pathImg_hero" placeholder="Adres/nazwa zdjecia" class="form__control-input">
+            <p class="form__control form__control-title">Adres/nazwa zdjęcia</p>
+            <input type="text" name="pathImg_hero" id="pathImg_hero" class="form__control-input form__control-margin">
         </div>
 
         <div class="form__control">
-            <input type="number" name="price_hero" id="price_hero" placeholder="Cena wynajmu/h" class="form__control-input">
+            <p class="form__control form__control-title">Cena wynajmu /h</p>
+            <input type="number" name="price_hero" id="price_hero" class="form__control-input form__control-margin">
         </div>
 
         <div class="form__control">
-            <textarea type="text" name="description_hero" id="description_hero" placeholder="Opis bohatera" class="form__control-input form__control-textarea"></textarea>
+            <p class="form__control form__control-title">Opis bohatera</p>
+            <textarea type="text" name="description_hero" id="description_hero"  class="form__control-input form__control-textarea form__control-margin"></textarea>
         </div>
 
         <button type="submit" class="form__button" id="editHero">Edytuj</button>

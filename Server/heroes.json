@@ -27,6 +27,13 @@
       "image": "images/hulk.jpg",
       "price": "100000",
       "isAvailable": true
+    },
+    {
+      "name": "Thor",
+      "description": "dmklfjnajsgjingsjipgrpngrenpgreprgepigren",
+      "image": "images/thor.jpg",
+      "price": "710000",
+      "isAvailable": true
     }
   ]
 }

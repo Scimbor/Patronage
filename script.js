@@ -59,12 +59,14 @@ class Store {
             if (res != null) {
                 heroes = res;
                 UI.displayHeroes(document.querySelector('.heroesList'));
+                UI.createModal();
             }
         }).catch(err => console.log(err));
     }
 
     static getBasket() {
         let basketArray;
+
         if (localStorage.getItem('heroesBasket') === null) {
             basketArray = [];
         } else {
@@ -75,8 +77,14 @@ class Store {
     }
 
     static addAndEditHero(name, description, image, price, isAvailable, typeRequest, link) {
+        
+        if(document.getElementById('loader') != null){
+            document.getElementById('loader').classList.add("showLoader");
+        }
+
         if (name === '' || description === '' || image === '' || price == '') {
             document.getElementById('dangerFill').classList.add("dangerFill");
+            document.getElementById('loader').classList.remove('showLoader');
         } else {
             let hero = {
                 name,
@@ -85,17 +93,20 @@ class Store {
                 price,
                 isAvailable
             }
-
+            
             const http = new requestsHTTP;
             if (typeRequest === "POST") {
-                let found = heroes.some((hero) => {
+                const found = heroes.some((hero) => {
                     return hero.name === name;
                 });
 
                 if (!found) {
-                    http.post(link, hero).then(() => console.log('Bohater dodany !')).catch(error => console.log(error));
+                    http.post(link, hero).then(() => {
+                        console.log('Bohater dodany !')}).catch(error => console.log(error));
+                        document.getElementById('loader').classList.remove('showLoader');
                 } else {
                     document.getElementById('dangerHero').classList.add("dangerHero");
+                    document.getElementById('loader').classList.remove('showLoader');
                 }
             } else if (typeRequest === "PUT") {
                 http.put(link, hero).then(res => console.log(res)).catch(error => console.log(error));
@@ -135,7 +146,7 @@ class UI {
             return 0;
         }
         heroes.forEach((hero, index) => {
-            let item = document.createElement('div');
+            const item = document.createElement('div');
 
             item.className = 'heroesList__hero';
             item.setAttribute('data-index', index);
@@ -155,7 +166,7 @@ class UI {
             return 0;
         }
 
-        let elements = document.getElementsByClassName('heroInBasket');
+        const elements = document.getElementsByClassName('heroInBasket');
 
         while (elements[0]) {
             elements[0].parentNode.removeChild(elements[0]);
@@ -182,7 +193,7 @@ class UI {
         if (shoppingBasket.length == 0 && document.querySelector('.shoppingBasket__state') != null) {
             document.querySelector('.shoppingBasket__state').textContent = 'Twój koszyk jest pusty.';
             document.getElementById('heroesCost').textContent = `${parseFloat(price).toFixed(2)} zł`;
-            document.getElementById('heroesCost').style.color = 'red';
+            document.getElementById('heroesCost').classList.add('heroesCostNull');
         } else if (shoppingBasket.length > 0 && document.querySelector('.shoppingBasket__state') != null) {
             price = 0;
             document.querySelector('.shoppingBasket__state').textContent = '';
@@ -194,60 +205,54 @@ class UI {
     }
 
     static deleteModal() {
-        document.querySelector('.heroesList__hero-modal').remove();
+        document.querySelector(".heroesList__hero-modal-content").setAttribute("data-name", '');
+        document.getElementById("heroesList__hero-modal-img").setAttribute('src', '');
+        document.getElementById("heroesList__hero-modal-img").setAttribute('alt', '');
+        document.querySelector(".heroesList__hero-modal-contentContainer h1").textContent = `I'm `;
+        document.querySelector(".heroesList__hero-modal-contentContainer p").textContent = ``;
+        document.querySelector(".heroesList__hero-modal-price").textContent = `Wynajem: zl/h`;
+        document.querySelector(".heroesList__hero-modal-button").setAttribute("data-name", '');
+        document.getElementById('modalHero').classList.remove("show-modal");
     }
 
-    static createModal(nameHero, index) {
+    static createModal() {
 
-        if (document.querySelector('.heroesList__hero-modal')) {
-            return 0;
+        if(document.querySelector('.heroesList') == null){
+            return;
         }
-
-        const http = new requestsHTTP;
         
+        const container = document.querySelector('.heroesList');
+        const div = document.createElement('div');
+        div.className = `heroesList__hero-modal`;
+        div.id = "modalHero";
 
-        let hero = {};
-        http.get(`http://localhost:3000/heroes/${nameHero}`).then(res => {
-            if (res != null) {
-                hero = res;
-                const div = document.createElement('div');
-                const container = document.querySelector('.heroesList__hero');
-
-                div.className = `heroesList__hero-modal show-modal`;
-
-                let output = `
-                    <div class="heroesList__hero-modal-content">
-                        <span class="modal__close-button">&times;</span>
-                        <img src="${hero["image"]}" alt="${hero.name}">
-                        <div class="heroesList__hero-modal-contentContainer">
-                            <h1>I'm ${hero.name}</h1>
-                            <span class="heroesList__hero-modal-line"></span>
-                            <p>${hero.description}</p>
-                            <p class="heroesList__hero-modal-price">Wynajem: ${hero.price} zl/h</p>
-                            <button class="heroesList__hero-modal-button"  data-name="${hero.name}" data-index="${index}">Dodaj do koszyka</button>
-                        </div>
-                    </div>`;
+        let output = `
+                        <div class="heroesList__hero-modal-content" data-name="" >
+                            <span class="modal__close-button">&times;</span>
+                            <img src="" alt="" id="heroesList__hero-modal-img">
+                            <div class="heroesList__hero-modal-contentContainer">
+                                <h1></h1>
+                                <span class="heroesList__hero-modal-line"></span>
+                                <p></p>
+                                <p class="heroesList__hero-modal-price"></p>
+                                <button class="heroesList__hero-modal-button"  data-name="">Dodaj do koszyka</button>
+                            </div>
+                        </div>`;
 
 
-                div.innerHTML = output;
-                container.appendChild(div);
+        div.innerHTML = output;
+        container.appendChild(div);
+    }
 
-                let heroButtton = document.querySelector('.heroesList__hero-modal-button');
-
-                heroButtton.addEventListener('click', (e) => {
-                    let found = shoppingBasket.some((el) => {
-                        return el.name === nameHero;
-                    });
-                    if (!found) {
-                        Store.addHeroToBasketList(hero);
-                        UI.displayHeroesBasket();
-                        document.getElementById('heroesCost').style.color = 'black';
-                    } else {
-                        UI.heroMessage('Bohater znajduje sie w koszuku');
-                    }
-                });
-            }
-        }).catch(err => console.log(err));
+    static showModal(hero) {
+        document.querySelector(".heroesList__hero-modal-content").setAttribute("data-name", hero.name);
+        document.getElementById("heroesList__hero-modal-img").setAttribute('src', hero.image);
+        document.getElementById("heroesList__hero-modal-img").setAttribute('alt', hero.name);
+        document.querySelector(".heroesList__hero-modal-contentContainer h1").textContent = `I'm ${hero.name}`;
+        document.querySelector(".heroesList__hero-modal-contentContainer p").textContent = `${hero.description}`;
+        document.querySelector(".heroesList__hero-modal-price").textContent = `Wynajem: ${hero.price}zl/h`;
+        document.querySelector(".heroesList__hero-modal-button").setAttribute("data-name", hero.name);
+        document.querySelector('.heroesList__hero-modal').classList.add('show-modal');
     }
 
     static heroMessage(msg) {
@@ -285,16 +290,16 @@ class UI {
 
     static generateOptionsUI() {
         const http = new requestsHTTP;
-        let newList = document.createElement('ul');
-        let container = document.querySelector('.form__control-input');
-        let select = document.querySelector('.selectHero');
+        const newList = document.createElement('ul');
+        const container = document.querySelector('.form__control-input');
+        const select = document.querySelector('.selectHero');
 
         newList.className = "selectHeroList";
 
         http.get("http://localhost:3000/heroes").then(data => {
 
             data.forEach(hero => {
-                let li = document.createElement('li');
+                const li = document.createElement('li');
                 li.className = 'li-item';
                 li.setAttribute('data-name', hero.name);
                 li.appendChild(document.createTextNode(hero.name))
@@ -313,10 +318,10 @@ class UI {
         const http = new requestsHTTP;
 
         http.get("http://localhost:3000/heroes").then(data => {
-            let select = document.querySelector('.selectHero');
+            const select = document.querySelector('.selectHero');
 
             data.forEach(hero => {
-                let option = document.createElement('option');
+                const option = document.createElement('option');
                 option.setAttribute('value', hero.name);
                 option.text = hero.name;
                 select.appendChild(option);
@@ -330,17 +335,43 @@ document.addEventListener('DOMContentLoaded', (e) => {
     Store.getHeroes();
     shoppingBasket = Store.getBasket();
 
-    let toggle = document.querySelector('.main-nav_toggle-label');
-    let heroesContainer = document.querySelector('.heroesList');
+    const toggle = document.querySelector('.main-nav_toggle-label');
 
     UI.displayHeroesBasket();
     UI.generateSelectHeroes(document.querySelector('.selectHero'));
 
-    if (heroesContainer != null) {
-        heroesContainer.addEventListener('click', (e) => {
-            UI.createModal(e.target.parentNode.getAttribute("data-name"), e.target.parentNode.getAttribute("data-index"));
-        });
-    }
+    document.addEventListener('click', (e) => {     
+        if(e.target && e.target.className === `heroesList__hero-modal-button`){
+            const nameHero = e.target.getAttribute("data-name");
+
+            const found = shoppingBasket.some((el) => {
+                return el.name === nameHero;
+            });
+            
+            if (!found) {
+                const http = new requestsHTTP;
+                
+                http.get(`http://localhost:3000/heroes/${nameHero}`).then(res => {
+                    Store.addHeroToBasketList(res);
+                    UI.displayHeroesBasket();
+                    document.getElementById('heroesCost').classList.remove('heroesCostNull');
+                }).catch(err => console.log(err));
+            } else {
+                UI.heroMessage('Bohater znajduje sie w koszuku');
+            }
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target.parentNode.className === 'heroesList__hero') {
+            const hero = e.target.parentNode.getAttribute("data-name");
+            const http = new requestsHTTP;
+
+            http.get(`http://localhost:3000/heroes/${hero}`).then(res => {
+                UI.showModal(res);
+            }).catch(err => console.log(err));
+        }
+    });
 
     toggle.addEventListener('click', (e) => {
         toggle.classList.toggle('transformMenu');
